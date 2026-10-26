@@ -1,0 +1,94 @@
+# Local kind cluster: small resources, NodePorts mapped to localhost by
+# deploy/kind-config.yaml, images loaded with `kind load docker-image`.
+fullnameOverride: voting-app
+
+images:
+  vote:
+    repository: voting-app-vote
+    tag: local
+    pullPolicy: IfNotPresent
+  result:
+    repository: voting-app-result
+    tag: local
+    pullPolicy: IfNotPresent
+  worker:
+    repository: voting-app-worker
+    tag: local
+    pullPolicy: IfNotPresent
+
+replicaCount:
+  vote: 2
+  result: 2
+  worker: 1
+
+vote:
+  service:
+    type: NodePort
+    port: 80
+    nodePort: 30080
+  resources:
+    requests:
+      cpu: 25m
+      memory: 48Mi
+    limits:
+      cpu: 200m
+      memory: 192Mi
+
+result:
+  service:
+    type: NodePort
+    port: 80
+    nodePort: 30081
+  resources:
+    requests:
+      cpu: 25m
+      memory: 48Mi
+    limits:
+      cpu: 200m
+      memory: 192Mi
+
+worker:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 300m
+      memory: 192Mi
+
+postgresql:
+  persistence:
+    size: 1Gi
+  resources:
+    requests:
+      cpu: 50m
+      memory: 96Mi
+    limits:
+      cpu: 300m
+      memory: 384Mi
+
+redis:
+  persistence:
+    size: 512Mi
+  resources:
+    requests:
+      cpu: 25m
+      memory: 32Mi
+    limits:
+      cpu: 150m
+      memory: 96Mi
+
+serviceMonitor:
+  enabled: false
+
+prometheusRule:
+  enabled: false
+
+autoscaling:
+  enabled: false
+
+networkPolicy:
+  enabled: false
+
+otel:
+  enabled: false

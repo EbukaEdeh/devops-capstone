@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#121212" />
+    <title>Tally Room — Live result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body class="result-page">
+    <div class="scanline" aria-hidden="true"></div>
+
+    <header class="masthead shell">
+      <a class="brand" href="http://localhost:8080">TALLY<span>/</span>ROOM</a>
+      <div class="status{% if degraded %} offline{% endif %}" id="connection-status">
+        <span class="status-dot"></span>
+        <span id="status-text">{% if degraded %}Database degraded{% else %}Live from PostgreSQL{% endif %}</span>
+      </div>
+    </header>
+
+    <main class="shell">
+      <section class="result-hero">
+        <div>
+          <p class="eyebrow">Result 02 / The live count</p>
+          <h1>The count,<br /><em>as it happens.</em></h1>
+        </div>
+        <div class="total-block">
+          <span class="total" id="total">{{ initial.total }}</span>
+          <span class="total-label">ballots counted</span>
+        </div>
+      </section>
+
+      <section class="board" aria-live="polite">
+        <div class="board-head">
+          <span>Rank / Choice</span>
+          <span>Share</span>
+        </div>
+
+        {% for choice in initial.choices %}
+        <article class="result-row" data-choice="{{ choice.id }}">
+          <div class="row-top">
+            <div class="choice-id">
+              <span class="rank">0{{ loop.index }}</span>
+              <span class="choice-name">{{ choice.label }}</span>
+              <span class="choice-tagline">{{ choice.tagline }}</span>
+            </div>
+            <div class="number-set">
+              <span class="count">{{ choice.count }}</span>
+              <span class="percent">{{ "%.1f"|format(choice.percent) }}%</span>
+            </div>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width: {{ choice.percent }}%"></div>
+          </div>
+        </article>
+        {% endfor %}
+      </section>
+
+      <div class="meta-row">
+        <span><span class="pulse"></span> Refreshing every 2 seconds</span>
+        <span>Last write <time id="updated-at">just now</time></span>
+        <a href="http://localhost:8080">← Back to the ballot</a>
+      </div>
+    </main>
+
+    <footer class="shell site-footer">
+      <span>Redis queue → worker → PostgreSQL</span>
+      <span>Capstone 01 / The Voting App</span>
+    </footer>
+
+    <script>
+      window.__INITIAL_RESULTS__ = {{ initial | tojson }};
+    </script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+  </body>
+</html>

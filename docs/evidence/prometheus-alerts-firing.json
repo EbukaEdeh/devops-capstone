@@ -1,0 +1,37 @@
+﻿{
+    "status":  "success",
+    "data":  {
+                 "alerts":  [
+                                {
+                                    "labels":  {
+                                                   "alertname":  "VotingFreshnessAtRisk",
+                                                   "service":  "voting-app",
+                                                   "severity":  "warning"
+                                               },
+                                    "annotations":  {
+                                                        "description":  "The oldest vote in Redis has been waiting more than 60 seconds. Check the worker and PostgreSQL.",
+                                                        "runbook_url":  "https://github.com/your-org/voting-app/blob/main/docs/RUNBOOK.md#queue-backlog",
+                                                        "summary":  "A queued vote is older than the 60s freshness target"
+                                                    },
+                                    "state":  "firing",
+                                    "activeAt":  "2026-10-26T21:27:54.029259331Z",
+                                    "value":  "6.3083411e+01"
+                                },
+                                {
+                                    "labels":  {
+                                                   "alertname":  "VotingQueueBacklog",
+                                                   "service":  "voting-app",
+                                                   "severity":  "warning"
+                                               },
+                                    "annotations":  {
+                                                        "description":  "More than 50 votes have been waiting for 5 minutes. Check the worker.",
+                                                        "runbook_url":  "https://github.com/your-org/voting-app/blob/main/docs/RUNBOOK.md#queue-backlog",
+                                                        "summary":  "Votes are queueing in Redis"
+                                                    },
+                                    "state":  "pending",
+                                    "activeAt":  "2026-10-26T21:27:09.029259331Z",
+                                    "value":  "8e+01"
+                                }
+                            ]
+             }
+}

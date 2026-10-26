@@ -1,0 +1,24 @@
+# Include only what each build needs. The repository root is the Docker context
+# because every image copies shared/voting_common.
+.git
+.gitignore
+.env
+.env.*
+!.env.example
+.github
+.vscode
+.idea
+**/__pycache__
+**/*.pyc
+.pytest_cache
+.coverage
+htmlcov
+infra
+deploy
+docs
+observability
+scripts
+tests
+README.md
+compose*.yaml
+*.md

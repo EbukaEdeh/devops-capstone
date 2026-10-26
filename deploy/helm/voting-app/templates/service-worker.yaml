@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "voting-app.fullname" . }}-worker
+  labels:
+    {{- include "voting-app.componentLabels" (dict "context" . "component" "worker") | nindent 4 }}
+    monitoring.voting-app/metrics: "true"
+spec:
+  type: ClusterIP
+  selector:
+    {{- include "voting-app.componentSelectorLabels" (dict "context" . "component" "worker") | nindent 4 }}
+  ports:
+    - name: http
+      port: {{ .Values.worker.service.port }}
+      targetPort: http
+      protocol: TCP

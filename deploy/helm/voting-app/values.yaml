@@ -1,0 +1,175 @@
+# Default values are safe for a local evaluation cluster. The chart never
+# contains credentials: create the referenced Secret before installing.
+#
+#   kubectl -n voting create secret generic voting-db-credentials \
+#     --from-literal=password='<strong-password>'
+#
+# CI/CD performs this step from GitHub Actions secrets.
+
+nameOverride: ""
+fullnameOverride: ""
+
+images:
+  vote:
+    repository: ghcr.io/your-github-user/voting-app-vote
+    tag: "1.0.0"
+    pullPolicy: IfNotPresent
+  result:
+    repository: ghcr.io/your-github-user/voting-app-result
+    tag: "1.0.0"
+    pullPolicy: IfNotPresent
+  worker:
+    repository: ghcr.io/your-github-user/voting-app-worker
+    tag: "1.0.0"
+    pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+
+logLevel: INFO
+
+serviceAccount:
+  create: true
+  automount: false
+  annotations: {}
+  name: ""
+
+replicaCount:
+  vote: 2
+  result: 2
+  worker: 1
+
+vote:
+  service:
+    type: ClusterIP
+    port: 80
+    nodePort: null
+  resources:
+    requests:
+      cpu: 50m
+      memory: 96Mi
+    limits:
+      cpu: 300m
+      memory: 256Mi
+
+result:
+  service:
+    type: ClusterIP
+    port: 80
+    nodePort: null
+  resources:
+    requests:
+      cpu: 50m
+      memory: 96Mi
+    limits:
+      cpu: 300m
+      memory: 256Mi
+
+worker:
+  service:
+    type: ClusterIP
+    port: 9101
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 256Mi
+
+postgresql:
+  enabled: true
+  image:
+    repository: postgres
+    tag: "16.10-alpine"
+    pullPolicy: IfNotPresent
+  auth:
+    username: voting
+    database: voting
+    # This Secret must exist in the release namespace. It is never rendered
+    # by the chart, so no password can accidentally land in Git.
+    existingSecret: voting-db-credentials
+    passwordKey: password
+  persistence:
+    enabled: true
+    size: 2Gi
+    storageClass: ""
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+redis:
+  enabled: true
+  # Set to an external redis:// URL when redis.enabled=false.
+  url: ""
+  image:
+    repository: redis
+    tag: "7.4.2-alpine"
+    pullPolicy: IfNotPresent
+  persistence:
+    enabled: true
+    size: 1Gi
+    storageClass: ""
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 200m
+      memory: 128Mi
+
+externalDatabase:
+  host: ""
+  port: 5432
+
+ingress:
+  enabled: false
+  className: nginx
+  annotations: {}
+  voteHost: vote.local
+  resultHost: result.local
+  tls: []
+
+serviceMonitor:
+  enabled: false
+  interval: 30s
+  labels:
+    release: kube-prometheus-stack
+
+prometheusRule:
+  enabled: false
+  labels:
+    release: kube-prometheus-stack
+
+autoscaling:
+  enabled: false
+  vote:
+    minReplicas: 2
+    maxReplicas: 6
+    targetCPUUtilizationPercentage: 70
+  result:
+    minReplicas: 2
+    maxReplicas: 6
+    targetCPUUtilizationPercentage: 70
+  worker:
+    minReplicas: 1
+    maxReplicas: 2
+    targetCPUUtilizationPercentage: 75
+
+networkPolicy:
+  enabled: false
+
+otel:
+  enabled: false
+  endpoint: http://otel-collector.observability.svc.cluster.local:4318
+  environment: production
+
+podAnnotations: {}
+podLabels: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}
+topologySpreadConstraints: []

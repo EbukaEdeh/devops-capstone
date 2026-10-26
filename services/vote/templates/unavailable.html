@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vote unavailable — Tally Room</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body class="vote-page">
+    <main class="shell error-shell">
+      <p class="eyebrow">503 / Dependency unavailable</p>
+      <h1>The ballot box is jammed.</h1>
+      <p class="lede">
+        The vote service cannot reach Redis right now. Nothing was recorded.
+        Check the dependency and try again.
+      </p>
+      <a class="text-link" href="/">← Back to the ballot</a>
+    </main>
+  </body>
+</html>

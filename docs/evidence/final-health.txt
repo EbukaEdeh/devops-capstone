@@ -1,0 +1,30 @@
+﻿Captured: 2026-10-26T21:42:20Z
+
+== docker compose ps ==
+NAME                          IMAGE                                          COMMAND                  SERVICE          CREATED              STATUS                        PORTS
+voting-app-db-1               postgres:16.10-alpine                          "docker-entrypoint.sÔÇª"   db               About a minute ago   Up About a minute (healthy)   5432/tcp
+voting-app-grafana-1          grafana/grafana:11.4.0                         "/run.sh"                grafana          About a minute ago   Up 59 seconds                 0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp
+voting-app-jaeger-1           jaegertracing/all-in-one:1.62.0                "/go/bin/all-in-one-ÔÇª"   jaeger           About a minute ago   Up About a minute             0.0.0.0:16686->16686/tcp, [::]:16686->16686/tcp
+voting-app-loki-1             grafana/loki:3.2.0                             "/usr/bin/loki -confÔÇª"   loki             About a minute ago   Up 59 seconds                 0.0.0.0:3100->3100/tcp, [::]:3100->3100/tcp
+voting-app-otel-collector-1   otel/opentelemetry-collector-contrib:0.120.0   "/otelcol-contrib --ÔÇª"   otel-collector   About a minute ago   Up 59 seconds                 0.0.0.0:4317-4318->4317-4318/tcp, [::]:4317-4318->4317-4318/tcp, 0.0.0.0:13133->13133/tcp, [::]:13133->13133/tcp
+voting-app-prometheus-1       prom/prometheus:v2.55.1                        "/bin/prometheus --cÔÇª"   prometheus       About a minute ago   Up About a minute             0.0.0.0:9090->9090/tcp, [::]:9090->9090/tcp
+voting-app-promtail-1         grafana/promtail:3.2.0                         "/usr/bin/promtail -ÔÇª"   promtail         About a minute ago   Up 58 seconds                 
+voting-app-redis-1            redis:7.4.2-alpine                             "docker-entrypoint.sÔÇª"   redis            About a minute ago   Up About a minute (healthy)   6379/tcp
+voting-app-result-1           voting-app-result:local                        "opentelemetry-instrÔÇª"   result           About a minute ago   Up 52 seconds (healthy)       0.0.0.0:8081->8080/tcp, [::]:8081->8080/tcp
+voting-app-vote-1             voting-app-vote:local                          "opentelemetry-instrÔÇª"   vote             About a minute ago   Up 55 seconds (healthy)       0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp
+voting-app-worker-1           voting-app-worker:local                        "opentelemetry-instrÔÇª"   worker           About a minute ago   Up 52 seconds (healthy)       9101/tcp
+
+== live app ==
+result_total=283
+queue_depth=0
+db=283 rows / 283 unique
+
+== observability ==
+prometheus=Prometheus Server is Ready.
+loki=ready
+grafana=ok
+jaeger_services=vote, result, worker, jaeger-all-in-one
+rule_VotingFreshnessAtRisk=inactive
+rule_VotingQueueBacklog=inactive
+rule_VotingAppHighErrorRate=inactive
+rule_VotingAppHighLatency=inactive

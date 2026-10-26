@@ -1,0 +1,100 @@
+﻿{
+    "votes_cast_total":  {
+                             "result":  [
+                                            {
+                                                "metric":  {
+
+                                                           },
+                                                "value":  [
+                                                              1793049740.760,
+                                                              "30"
+                                                          ]
+                                            }
+                                        ],
+                             "query":  "sum(votes_cast_total)"
+                         },
+    "votes_processed_total":  {
+                                  "result":  [
+                                                 {
+                                                     "metric":  {
+
+                                                                },
+                                                     "value":  [
+                                                                   1793049740.823,
+                                                                   "30"
+                                                               ]
+                                                 }
+                                             ],
+                                  "query":  "sum(votes_processed_total)"
+                              },
+    "queue_depth":  {
+                        "result":  [
+                                       {
+                                           "metric":  {
+
+                                                      },
+                                           "value":  [
+                                                         1793049740.828,
+                                                         "0"
+                                                     ]
+                                       }
+                                   ],
+                        "query":  "max(vote_queue_depth{service=\"vote\"})"
+                    },
+    "queue_oldest_age":  {
+                             "result":  [
+                                            {
+                                                "metric":  {
+
+                                                           },
+                                                "value":  [
+                                                              1793049740.830,
+                                                              "0"
+                                                          ]
+                                            }
+                                        ],
+                             "query":  "max(vote_queue_oldest_age_seconds{service=\"vote\"})"
+                         },
+    "request_rate":  {
+                         "result":  [
+                                        {
+                                            "metric":  {
+
+                                                       },
+                                            "value":  [
+                                                          1793049740.832,
+                                                          "0.2641949271819488"
+                                                      ]
+                                        }
+                                    ],
+                         "query":  "sum(rate(http_requests_total[5m]))"
+                     },
+    "p95_latency":  {
+                        "result":  [
+                                       {
+                                           "metric":  {
+
+                                                      },
+                                           "value":  [
+                                                         1793049740.835,
+                                                         "0.004810694360142975"
+                                                     ]
+                                       }
+                                   ],
+                        "query":  "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket[5m])))"
+                    },
+    "scrape_targets_up":  {
+                              "result":  [
+                                             {
+                                                 "metric":  {
+
+                                                            },
+                                                 "value":  [
+                                                               1793049740.837,
+                                                               "3"
+                                                           ]
+                                             }
+                                         ],
+                              "query":  "sum(up{job=~\"vote|result|worker\"})"
+                          }
+}

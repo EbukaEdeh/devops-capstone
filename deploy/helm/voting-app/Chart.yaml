@@ -1,0 +1,7 @@
+apiVersion: v2
+name: voting-app
+description: A small, production-shaped voting app with Redis, PostgreSQL, metrics and traces.
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+kubeVersion: ">=1.27.0-0"

@@ -1,0 +1,13 @@
+# Terraform CLI configuration for this project.
+# Values can also be provided through TF_VAR_* environment variables or a
+# local terraform.tfvars file (ignored by Git).
+
+aws_region  = "us-east-1"
+cluster_name = "voting-capstone"
+environment  = "capstone"
+
+# Restrict API access to your current public IP before running apply:
+# cluster_endpoint_public_access_cidrs = ["203.0.113.10/32"]
+
+# node_instance_types = ["t3.small"]
+# node_desired_size    = 2

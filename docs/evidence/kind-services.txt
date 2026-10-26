@@ -1,0 +1,6 @@
+﻿NAME                    TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+voting-app-postgresql   ClusterIP   10.96.120.78   <none>        5432/TCP       67s
+voting-app-redis        ClusterIP   10.96.27.113   <none>        6379/TCP       67s
+voting-app-result       NodePort    10.96.8.43     <none>        80:30081/TCP   67s
+voting-app-vote         NodePort    10.96.102.83   <none>        80:30080/TCP   67s
+voting-app-worker       ClusterIP   10.96.19.39    <none>        9101/TCP       67s

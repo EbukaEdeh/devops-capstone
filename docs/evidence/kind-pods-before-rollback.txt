@@ -1,0 +1,8 @@
+﻿NAME                                 READY   STATUS    RESTARTS   AGE   IP            NODE                            NOMINATED NODE   READINESS GATES
+voting-app-postgresql-0              1/1     Running   0          66s   10.244.0.12   voting-capstone-control-plane   <none>           <none>
+voting-app-redis-0                   1/1     Running   0          66s   10.244.0.13   voting-capstone-control-plane   <none>           <none>
+voting-app-result-55b79f964c-jlxl2   1/1     Running   0          66s   10.244.0.7    voting-capstone-control-plane   <none>           <none>
+voting-app-result-55b79f964c-xl9t8   1/1     Running   0          66s   10.244.0.9    voting-capstone-control-plane   <none>           <none>
+voting-app-vote-5c68994dd5-9l9rv     1/1     Running   0          66s   10.244.0.8    voting-capstone-control-plane   <none>           <none>
+voting-app-vote-5c68994dd5-qgv5z     1/1     Running   0          66s   10.244.0.6    voting-capstone-control-plane   <none>           <none>
+voting-app-worker-594cf8746c-cd9zw   1/1     Running   0          66s   10.244.0.5    voting-capstone-control-plane   <none>           <none>

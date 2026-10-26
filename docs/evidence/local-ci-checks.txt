@@ -1,0 +1,20 @@
+﻿== pytest ==
+...................                                                      [100%]
+19 passed in 1.01s
+== helm lint ==
+==> Linting deploy/helm/voting-app
+[INFO] Chart.yaml: icon is recommended
+
+1 chart(s) linted, 0 chart(s) failed
+== helm template prod ==
+interval: 30s
+      scrapeTimeout: 10s
+== terraform fmt ==
+
+== terraform validate ==
+[32m[1mSuccess![0m The configuration is valid.
+[0m
+== compose config ==
+exit=0
+== dashboard json ==
+valid

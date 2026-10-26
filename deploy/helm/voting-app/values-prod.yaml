@@ -1,0 +1,50 @@
+# Production-shaped values for Capstone 2. Image tags are replaced by CI.
+replicaCount:
+  vote: 3
+  result: 2
+  worker: 2
+
+postgresql:
+  persistence:
+    size: 10Gi
+
+redis:
+  persistence:
+    size: 5Gi
+
+ingress:
+  enabled: false
+
+serviceMonitor:
+  enabled: true
+  interval: 30s
+  labels:
+    release: kube-prometheus-stack
+
+prometheusRule:
+  enabled: true
+  labels:
+    release: kube-prometheus-stack
+
+autoscaling:
+  enabled: true
+  vote:
+    minReplicas: 2
+    maxReplicas: 8
+    targetCPUUtilizationPercentage: 70
+  result:
+    minReplicas: 2
+    maxReplicas: 6
+    targetCPUUtilizationPercentage: 70
+  worker:
+    minReplicas: 1
+    maxReplicas: 3
+    targetCPUUtilizationPercentage: 75
+
+networkPolicy:
+  enabled: true
+
+otel:
+  enabled: true
+  endpoint: http://otel-collector.observability.svc.cluster.local:4318
+  environment: production

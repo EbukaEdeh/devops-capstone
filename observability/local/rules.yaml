@@ -1,0 +1,57 @@
+# Local mirror of the Helm PrometheusRule for the Docker Compose demo.
+# The Helm chart is the source of truth for Kubernetes; this file exists so
+# `docker compose ... -f compose.observability.yaml` can show alerts firing
+# without installing kube-prometheus-stack.
+groups:
+  - name: voting-app.local
+    rules:
+      - alert: VotingFreshnessAtRisk
+        expr: max(vote_queue_oldest_age_seconds{service="vote"}) > 60
+        labels:
+          severity: warning
+          service: voting-app
+        annotations:
+          summary: "A queued vote is older than the 60s freshness target"
+          description: "The oldest vote in Redis has been waiting more than 60 seconds. Check the worker and PostgreSQL."
+          runbook_url: "https://github.com/your-org/voting-app/blob/main/docs/RUNBOOK.md#queue-backlog"
+
+      - alert: VotingQueueBacklog
+        expr: max(vote_queue_depth{service="vote"}) > 50
+        for: 5m
+        labels:
+          severity: warning
+          service: voting-app
+        annotations:
+          summary: "Votes are queueing in Redis"
+          description: "More than 50 votes have been waiting for 5 minutes. Check the worker."
+          runbook_url: "https://github.com/your-org/voting-app/blob/main/docs/RUNBOOK.md#queue-backlog"
+
+      - alert: VotingAppHighErrorRate
+        expr: |
+          sum(rate(http_requests_total{service=~"vote|result", status=~"5.."}[5m]))
+          /
+          clamp_min(sum(rate(http_requests_total{service=~"vote|result"}[5m])), 0.001)
+          > 0.05
+        for: 1m
+        labels:
+          severity: critical
+          service: voting-app
+        annotations:
+          summary: "Voting App 5xx rate is above 5%"
+          description: "The user-facing error rate has exceeded the fast-burn threshold."
+          runbook_url: "https://github.com/your-org/voting-app/blob/main/docs/RUNBOOK.md#high-error-rate"
+
+      - alert: VotingAppHighLatency
+        expr: |
+          histogram_quantile(
+            0.95,
+            sum by (le) (rate(http_request_duration_seconds_bucket{service=~"vote|result"}[5m]))
+          ) > 0.5
+        for: 5m
+        labels:
+          severity: warning
+          service: voting-app
+        annotations:
+          summary: "Voting App p95 latency is above 500 ms"
+          description: "The p95 latency SLO is burning. Check database and Redis latency."
+          runbook_url: "https://github.com/your-org/voting-app/blob/main/docs/RUNBOOK.md#high-latency"

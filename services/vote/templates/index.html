@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f2efe7" />
+    <title>Tally Room — Cast your vote</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body class="vote-page">
+    <div class="ambient ambient-one" aria-hidden="true"></div>
+    <div class="ambient ambient-two" aria-hidden="true"></div>
+
+    <header class="masthead shell">
+      <a class="brand" href="/" aria-label="Tally Room home">
+        TALLY<span>/</span>ROOM
+      </a>
+      <div class="live-pill"><span class="live-dot"></span> Live demo</div>
+    </header>
+
+    <main class="shell">
+      <section class="hero">
+        <p class="eyebrow">Capstone 01 / The Voting App</p>
+        <h1>Pick a side.<br /><em>Make it count.</em></h1>
+        <p class="lede">
+          One ballot. One queue. One worker writing the truth to PostgreSQL.
+          Cast a vote and watch it appear on the live result board.
+        </p>
+      </section>
+
+      {% if selected %}
+      <div class="notice" role="status">
+        <span class="notice-mark">✓</span>
+        <span>Vote queued for <strong>{{ selected.label }}</strong>. The worker is on it.</span>
+        <a href="/">Vote again</a>
+      </div>
+      {% endif %}
+
+      <div class="ballot-layout">
+        <form class="ballot" method="post" action="/vote">
+          {% for id, option in options.items() %}
+          <label class="choice">
+            <input type="radio" name="choice" value="{{ id }}" required />
+            <span class="choice-inner">
+              <span class="choice-index">0{{ loop.index }}</span>
+              <span class="choice-copy">
+                <span class="choice-name">{{ option.label }}</span>
+                <span class="choice-tagline">{{ option.tagline }}</span>
+              </span>
+              <span class="choice-glyph" aria-hidden="true">
+                {% if id == 'cats' %}
+                <svg viewBox="0 0 64 64" role="presentation">
+                  <path d="M13 28 9 9l17 10a27 27 0 0 1 12 0L55 9l-4 19a24 24 0 1 1-38 0Z" />
+                  <circle cx="25" cy="34" r="2.6" /><circle cx="39" cy="34" r="2.6" />
+                  <path d="M29 41c2 2 4 2 6 0" />
+                </svg>
+                {% else %}
+                <svg viewBox="0 0 64 64" role="presentation">
+                  <path d="M15 34c0-13 8-21 17-21s17 8 17 21c0 9-6 15-17 15S15 43 15 34Z" />
+                  <path d="M23 15 17 6c-3 3-4 8-2 12M41 15l6-9c3 3 4 8 2 12" />
+                  <circle cx="26" cy="34" r="2.6" /><circle cx="38" cy="34" r="2.6" />
+                  <path d="M29 42c2 3 4 3 6 0" />
+                </svg>
+                {% endif %}
+              </span>
+              <span class="choice-action">Cast vote <span aria-hidden="true">→</span></span>
+            </span>
+          </label>
+          {% endfor %}
+
+          <button class="submit" type="submit">
+            Submit ballot <span aria-hidden="true">→</span>
+          </button>
+        </form>
+
+        <aside class="flow-card">
+          <p class="flow-kicker">Under the hood</p>
+          <ol>
+            <li><span>01</span> Your vote is pushed onto a Redis queue.</li>
+            <li><span>02</span> The worker pops it and writes to PostgreSQL.</li>
+            <li><span>03</span> The result service reads the live totals.</li>
+          </ol>
+          <div class="flow-footer">
+            <span class="pulse"></span>
+            <span>vote → redis → worker → postgres → result</span>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <footer class="shell site-footer">
+      <span>DevOps Capstone / Beginner Edition</span>
+      <a href="http://localhost:8081">See the live result board →</a>
+    </footer>
+  </body>
+</html>
