@@ -91,7 +91,8 @@ if (-not $ready) {
     if ($WithObservability) {
         Write-Host "  Grafana:  http://localhost:3000  (credentials: GRAFANA_ADMIN_* in .env)"
         Write-Host "  Jaeger:   http://localhost:16686"
-        Write-Host "  Prom:     http://localhost:9090"
+        Write-Host "  Prom:     http://localhost:9090  (alerts: /alerts)"
+        Write-Host "  Loki:     http://localhost:3100  (query from Grafana Explore)"
     }
     Write-Host ""
     if ($Open) { Start-Process "http://localhost:8080" }

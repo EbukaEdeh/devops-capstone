@@ -126,6 +126,16 @@ Loki:
 {namespace="voting", service="vote"} | json | level="error"
 ```
 
+On the local Compose stack, open Grafana → Explore → Loki and use the same
+query without the `namespace` label:
+
+```logql
+{service="vote"} | json | level="error"
+```
+
+Prometheus alert rules are loaded from `observability/local/rules.yaml`, so
+`http://localhost:9090/alerts` shows them without Kubernetes.
+
 Jaeger:
 
 - Service: `vote`.
@@ -172,7 +182,9 @@ While waiting for the queue alert:
 - Show the queue draining and totals catching up.
 
 The 60-second age alert is the fast signal; the 5-minute queue-depth alert is
-the backup. Say which one actually fired instead of implying both did.
+the backup. Say which one actually fired instead of implying both did. On the
+local path, open `http://localhost:9090/alerts` and show
+`VotingFreshnessAtRisk` in the `firing` state before restarting the worker.
 
 If the alert has not fired yet, open Alertmanager and show the pending alert,
 or trigger `VotingAppPodDown` by deleting a pod and waiting. Do not claim an
