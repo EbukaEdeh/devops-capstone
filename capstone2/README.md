@@ -218,8 +218,9 @@ cleared by 23:25:58 UTC. The blameless write-up and action items are in
   Istio's Zipkin provider because Envoy's OTel gRPC exporter in this version
   sent HTTP/1.1 to the gRPC receiver. The OTel path remains available for
   application-level instrumentation.
-- Slack delivery needs a real `SLACK_WEBHOOK_URL`; the repo ships the
-  Alertmanager route and a placeholder secret example.
+- Slack delivery needs a real `SLACK_WEBHOOK_URL`. The route and receiver are
+  documented in `observability/alertmanager-slack.example.yaml`; the file is not
+  applied because the placeholder URL would fail delivery.
 - GitHub Actions and EKS require repository/AWS credentials that are not present
   on this machine. The workflow and Terraform are complete and validated; see
   the root `docs/EVIDENCE.md` for the exact external gaps.

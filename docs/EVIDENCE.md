@@ -45,8 +45,10 @@ The alert and dashboard paths are code, not only screenshots:
 [`fluent-bit-values.yaml`](../capstone2/observability/fluent-bit-values.yaml),
 [`loki-values.yaml`](../capstone2/observability/loki-values.yaml),
 [`istio-values.yaml`](../capstone2/observability/istio-values.yaml),
-[`jaeger.yaml`](../capstone2/observability/jaeger.yaml), and
-[`otel-collector.yaml`](../capstone2/observability/otel-collector.yaml).
+[`jaeger.yaml`](../capstone2/observability/jaeger.yaml),
+[`otel-collector.yaml`](../capstone2/observability/otel-collector.yaml), and the
+[`alertmanager-slack.example.yaml`](../capstone2/observability/alertmanager-slack.example.yaml)
+route that is ready to apply once a real webhook exists.
 
 ## Supplementary - Voting App observability on Docker Compose
 
