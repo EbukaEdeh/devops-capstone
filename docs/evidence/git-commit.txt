@@ -2,12 +2,13 @@ Git submission marker
 ======================
 
 Branch: main
-Tag:    v1.0.0 (created on this commit)
+HEAD:   see `git log --oneline --decorate`
+Tags:   v1.0.0 (Capstone 1 baseline), v1.1.0 (Capstone 2)
 Remote: not configured; creating a fork requires the owner's GitHub account.
 
-The repository contains the application, tests, Helm chart, Terraform, CI
-workflow, local observability stack, drill automation, postmortem and all
-evidence captured on 2026-10-26.
+The repository contains the application, tests, Helm charts, Terraform, CI
+workflow, local observability stack, Robot Shop Capstone 2 stack, drill
+automation, postmortems and all evidence captured on 2026-10-26.
 
 Verify with:
 
