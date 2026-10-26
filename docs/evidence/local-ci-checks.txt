@@ -35,3 +35,5 @@ terraform validate: Success! The configuration is valid.
 docker compose -f compose.yaml -f compose.observability.yaml config --quiet: exit 0
 markdown relative-link check (README, EVIDENCE, CHECKLIST, capstone2 docs): 9 files, 0 broken
 run-capstone2.ps1 parser check: OK
+run-capstone2.ps1 -SkipKindCreate: exit 0; all Helm releases upgraded; 13 robot-shop pods and observability pods Ready
+  log: docs/evidence/capstone2/run-capstone2.log

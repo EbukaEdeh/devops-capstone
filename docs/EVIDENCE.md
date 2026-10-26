@@ -112,6 +112,11 @@ kubectl -n robot-shop scale deployment/payment --replicas=0
 kubectl -n robot-shop scale deployment/payment --replicas=1
 ```
 
+The Capstone 2 script was re-run with `-SkipKindCreate` on 2026-10-26. It
+upgraded every Helm release cleanly and all 13 Robot Shop pods plus the
+observability pods were Ready afterwards. The command log is
+[`run-capstone2.log`](evidence/capstone2/run-capstone2.log).
+
 ## Still requires an external account or paid resource
 
 | Item | Why it is not captured here |
