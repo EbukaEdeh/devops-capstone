@@ -88,8 +88,8 @@ Grafana dashboard JSON          valid
 Every match is a variable reference or a documentation placeholder; no literal
 credential is tracked, and `.env` is ignored.
 
-The submission is committed on `main` and tagged `v1.0.0`; see
-[`git-commit.txt`](evidence/git-commit.txt).
+The submission is committed on `main` and tagged `v1.0.0` (Capstone 1) and
+`v1.1.0` (Capstone 2); see [`git-commit.txt`](evidence/git-commit.txt).
 
 ## Reproduction
 
