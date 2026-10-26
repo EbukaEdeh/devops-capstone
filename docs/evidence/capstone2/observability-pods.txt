@@ -1,0 +1,11 @@
+﻿NAME                                                        READY   STATUS    RESTARTS   AGE   IP            NODE                            NOMINATED NODE   READINESS GATES
+alertmanager-kube-prometheus-stack-alertmanager-0           2/2     Running   0          36m   10.244.0.47   voting-capstone-control-plane   <none>           <none>
+fluent-bit-7tkhs                                            1/1     Running   0          30m   10.244.0.58   voting-capstone-control-plane   <none>           <none>
+jaeger-545b66dc7b-b8x9j                                     1/1     Running   0          22m   10.244.0.68   voting-capstone-control-plane   <none>           <none>
+kube-prometheus-stack-grafana-6f7f4d5c9f-ts58w              3/3     Running   0          10m   10.244.0.74   voting-capstone-control-plane   <none>           <none>
+kube-prometheus-stack-kube-state-metrics-78dc75b868-s2k6p   1/1     Running   0          36m   10.244.0.44   voting-capstone-control-plane   <none>           <none>
+kube-prometheus-stack-operator-64d4987455-464fm             1/1     Running   0          36m   10.244.0.45   voting-capstone-control-plane   <none>           <none>
+kube-prometheus-stack-prometheus-node-exporter-d2zd9        1/1     Running   0          36m   172.20.0.5    voting-capstone-control-plane   <none>           <none>
+loki-0                                                      2/2     Running   0          32m   10.244.0.57   voting-capstone-control-plane   <none>           <none>
+otel-collector-5fb8b65698-wbnlt                             1/1     Running   0          25m   10.244.0.62   voting-capstone-control-plane   <none>           <none>
+prometheus-kube-prometheus-stack-prometheus-0               2/2     Running   0          36m   10.244.0.48   voting-capstone-control-plane   <none>           <none>

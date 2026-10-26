@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-initdb
+  labels:
+    service: mysql
+data:
+  10-schema.sql: |
+    USE cities;
+
+    CREATE TABLE IF NOT EXISTS cities (
+      uuid int(11) NOT NULL AUTO_INCREMENT,
+      country_code varchar(2) DEFAULT NULL,
+      city varchar(100) DEFAULT NULL,
+      name varchar(100) DEFAULT NULL,
+      region varchar(100) DEFAULT NULL,
+      latitude decimal(10,7) DEFAULT NULL,
+      longitude decimal(10,7) DEFAULT NULL,
+      PRIMARY KEY (uuid),
+      KEY region_idx (region),
+      KEY c_code_idx (country_code)
+    ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+    INSERT INTO cities (country_code, city, name, region, latitude, longitude) VALUES
+      ('US', 'New York', 'New York', 'NY', 40.7128000, -74.0060000),
+      ('US', 'Los Angeles', 'Los Angeles', 'CA', 34.0522000, -118.2437000),
+      ('GB', 'London', 'London', 'England', 51.5074000, -0.1278000),
+      ('DE', 'Berlin', 'Berlin', 'Berlin', 52.5200000, 13.4050000),
+      ('FR', 'Paris', 'Paris', 'Ile-de-France', 48.8566000, 2.3522000),
+      ('NG', 'Lagos', 'Lagos', 'Lagos', 6.5244000, 3.3792000),
+      ('JP', 'Tokyo', 'Tokyo', 'Tokyo', 35.6762000, 139.6503000),
+      ('AU', 'Sydney', 'Sydney', 'New South Wales', -33.8688000, 151.2093000);
+
+    CREATE TABLE IF NOT EXISTS codes (
+      uuid int(11) NOT NULL AUTO_INCREMENT,
+      code varchar(2) NOT NULL,
+      name varchar(100) NOT NULL,
+      PRIMARY KEY (uuid),
+      UNIQUE KEY code_idx (code)
+    ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+    INSERT INTO codes (code, name) VALUES
+      ('AU', 'Australia'),
+      ('DE', 'Germany'),
+      ('FR', 'France'),
+      ('GB', 'United Kingdom'),
+      ('JP', 'Japan'),
+      ('NG', 'Nigeria'),
+      ('US', 'United States');
+  20-ratings.sql: |
+    CREATE DATABASE IF NOT EXISTS ratings
+    DEFAULT CHARACTER SET 'utf8';
+
+    USE ratings;
+
+    CREATE TABLE IF NOT EXISTS ratings (
+      sku varchar(80) NOT NULL,
+      avg_rating DECIMAL(3, 2) NOT NULL,
+      rating_count INT NOT NULL,
+      PRIMARY KEY (sku)
+    ) ENGINE=InnoDB;
+
+    GRANT ALL ON ratings.* TO 'ratings'@'%' IDENTIFIED BY 'iloveit';

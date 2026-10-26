@@ -1,0 +1,98 @@
+﻿apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"monitoring.coreos.com/v1","kind":"PrometheusRule","metadata":{"annotations":{},"labels":{"app.kubernetes.io/part-of":"robot-shop-observability","release":"kube-prometheus-stack"},"name":"robot-shop-slo","namespace":"observability"},"spec":{"groups":[{"interval":"30s","name":"robot-shop.slo","rules":[{"alert":"RobotShopHighErrorRate","annotations":{"dashboard_url":"http://localhost:3000/d/robot-shop-slo","description":"The 5xx ratio for web/catalogue/cart/payment is {{ $value | humanize }}% over the last 5 minutes (SLO threshold: 5%).","runbook_url":"https://github.com/your-org/capstone-project/blob/main/capstone2/docs/RUNBOOK.md","summary":"Robot Shop 5xx error rate is above 5%"},"expr":"100 * (\n  sum(rate(istio_requests_total{\n    reporter=\"destination\",\n    destination_service_namespace=\"robot-shop\",\n    destination_service_name=~\"web|catalogue|cart|payment\",\n    response_code=~\"5..\"\n  }[5m]))\n  /\n  clamp_min(sum(rate(istio_requests_total{\n    reporter=\"destination\",\n    destination_service_namespace=\"robot-shop\",\n    destination_service_name=~\"web|catalogue|cart|payment\"\n  }[5m])), 0.001)\n) \u003e 5\n","for":"5m","labels":{"service":"robot-shop","severity":"critical","slo":"availability"}},{"alert":"RobotShopHighLatency","annotations":{"dashboard_url":"http://localhost:3000/d/robot-shop-slo","description":"Aggregate p95 latency for web/catalogue/cart/payment is {{ $value | humanize }} ms over the last 5 minutes (SLO threshold: 500 ms).","runbook_url":"https://github.com/your-org/capstone-project/blob/main/capstone2/docs/RUNBOOK.md","summary":"Robot Shop p95 latency is above 500 ms"},"expr":"histogram_quantile(0.95,\n  sum(rate(istio_request_duration_milliseconds_bucket{\n    reporter=\"destination\",\n    destination_service_namespace=\"robot-shop\",\n    destination_service_name=~\"web|catalogue|cart|payment\"\n  }[5m])) by (le)\n) \u003e 500\n","for":"5m","labels":{"service":"robot-shop","severity":"warning","slo":"latency"}},{"alert":"RobotShopServiceDown","annotations":{"dashboard_url":"http://localhost:3000/d/robot-shop-slo","description":"Deployment {{ $labels.deployment }} has had zero ready replicas for 2 minutes. The service is unavailable.","runbook_url":"https://github.com/your-org/capstone-project/blob/main/capstone2/docs/RUNBOOK.md","summary":"Robot Shop deployment {{ $labels.deployment }} has no ready replicas"},"expr":"sum(kube_deployment_status_replicas_ready{\n  namespace=\"robot-shop\",\n  deployment=~\"web|catalogue|cart|payment\"\n}) by (deployment) == 0\n","for":"2m","labels":{"service":"robot-shop","severity":"critical","slo":"availability"}},{"alert":"RobotShopPodRestarting","annotations":{"dashboard_url":"http://localhost:3000/d/robot-shop-slo","description":"Container {{ $labels.container }} in pod {{ $labels.pod }} restarted {{ $value | humanize }} time(s) in the last 15 minutes.","runbook_url":"https://github.com/your-org/capstone-project/blob/main/capstone2/docs/RUNBOOK.md","summary":"Robot Shop pod {{ $labels.pod }} is restarting"},"expr":"increase(kube_pod_container_status_restarts_total{namespace=\"robot-shop\"}[15m]) \u003e 0\n","for":"5m","labels":{"service":"robot-shop","severity":"warning"}}]}]}}
+    prometheus-operator-validated: "true"
+  creationTimestamp: "2026-10-26T23:11:17Z"
+  generation: 1
+  labels:
+    app.kubernetes.io/part-of: robot-shop-observability
+    release: kube-prometheus-stack
+  name: robot-shop-slo
+  namespace: observability
+  resourceVersion: "10364"
+  uid: b964e985-da28-4abe-a550-4eb58863e2af
+spec:
+  groups:
+  - interval: 30s
+    name: robot-shop.slo
+    rules:
+    - alert: RobotShopHighErrorRate
+      annotations:
+        dashboard_url: http://localhost:3000/d/robot-shop-slo
+        description: 'The 5xx ratio for web/catalogue/cart/payment is {{ $value |
+          humanize }}% over the last 5 minutes (SLO threshold: 5%).'
+        runbook_url: https://github.com/your-org/capstone-project/blob/main/capstone2/docs/RUNBOOK.md
+        summary: Robot Shop 5xx error rate is above 5%
+      expr: |
+        100 * (
+          sum(rate(istio_requests_total{
+            reporter="destination",
+            destination_service_namespace="robot-shop",
+            destination_service_name=~"web|catalogue|cart|payment",
+            response_code=~"5.."
+          }[5m]))
+          /
+          clamp_min(sum(rate(istio_requests_total{
+            reporter="destination",
+            destination_service_namespace="robot-shop",
+            destination_service_name=~"web|catalogue|cart|payment"
+          }[5m])), 0.001)
+        ) > 5
+      for: 5m
+      labels:
+        service: robot-shop
+        severity: critical
+        slo: availability
+    - alert: RobotShopHighLatency
+      annotations:
+        dashboard_url: http://localhost:3000/d/robot-shop-slo
+        description: 'Aggregate p95 latency for web/catalogue/cart/payment is {{ $value
+          | humanize }} ms over the last 5 minutes (SLO threshold: 500 ms).'
+        runbook_url: https://github.com/your-org/capstone-project/blob/main/capstone2/docs/RUNBOOK.md
+        summary: Robot Shop p95 latency is above 500 ms
+      expr: |
+        histogram_quantile(0.95,
+          sum(rate(istio_request_duration_milliseconds_bucket{
+            reporter="destination",
+            destination_service_namespace="robot-shop",
+            destination_service_name=~"web|catalogue|cart|payment"
+          }[5m])) by (le)
+        ) > 500
+      for: 5m
+      labels:
+        service: robot-shop
+        severity: warning
+        slo: latency
+    - alert: RobotShopServiceDown
+      annotations:
+        dashboard_url: http://localhost:3000/d/robot-shop-slo
+        description: Deployment {{ $labels.deployment }} has had zero ready replicas
+          for 2 minutes. The service is unavailable.
+        runbook_url: https://github.com/your-org/capstone-project/blob/main/capstone2/docs/RUNBOOK.md
+        summary: Robot Shop deployment {{ $labels.deployment }} has no ready replicas
+      expr: |
+        sum(kube_deployment_status_replicas_ready{
+          namespace="robot-shop",
+          deployment=~"web|catalogue|cart|payment"
+        }) by (deployment) == 0
+      for: 2m
+      labels:
+        service: robot-shop
+        severity: critical
+        slo: availability
+    - alert: RobotShopPodRestarting
+      annotations:
+        dashboard_url: http://localhost:3000/d/robot-shop-slo
+        description: Container {{ $labels.container }} in pod {{ $labels.pod }} restarted
+          {{ $value | humanize }} time(s) in the last 15 minutes.
+        runbook_url: https://github.com/your-org/capstone-project/blob/main/capstone2/docs/RUNBOOK.md
+        summary: Robot Shop pod {{ $labels.pod }} is restarting
+      expr: |
+        increase(kube_pod_container_status_restarts_total{namespace="robot-shop"}[15m]) > 0
+      for: 5m
+      labels:
+        service: robot-shop
+        severity: warning

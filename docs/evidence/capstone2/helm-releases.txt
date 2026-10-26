@@ -1,0 +1,7 @@
+﻿NAME                 	NAMESPACE    	REVISION	UPDATED                              	STATUS  	CHART                        	APP VERSION
+fluent-bit           	observability	1       	2026-10-26 17:56:42.6998064 -0500 CDT	deployed	fluent-bit-0.58.3            	5.1.3      
+istio-base           	istio-system 	1       	2026-10-26 17:53:49.4219122 -0500 CDT	deployed	base-1.30.7                  	1.30.7     
+istiod               	istio-system 	2       	2026-10-26 18:04:40.3887843 -0500 CDT	deployed	istiod-1.30.7                	1.30.7     
+kube-prometheus-stack	observability	3       	2026-10-26 18:09:08.2453722 -0500 CDT	deployed	kube-prometheus-stack-92.14.0	v0.94.2    
+loki                 	observability	1       	2026-10-26 17:55:21.7169629 -0500 CDT	deployed	loki-7.5.0                   	3.6.16     
+robot-shop           	robot-shop   	10      	2026-10-26 17:58:29.0441521 -0500 CDT	deployed	robot-shop-1.1.0             	           

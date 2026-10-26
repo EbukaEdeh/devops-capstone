@@ -190,7 +190,58 @@ If the alert has not fired yet, open Alertmanager and show the pending alert,
 or trigger `VotingAppPodDown` by deleting a pod and waiting. Do not claim an
 alert fired if it did not; say “pending” and explain the `for: 5m` window.
 
-## 9. Close (1 minute)
+## 9. Capstone 2 — Robot Shop and observability (5 minutes)
+
+Start the second stack once the Voting App demo is finished. It uses the same
+kind cluster name but a separate namespace, and adds Istio, Prometheus,
+Grafana, Loki, Fluent Bit, Jaeger, and the Robot Shop chart.
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\run-capstone2.ps1
+```
+
+Open http://localhost:8090. The load generator is already running, so request
+rate, errors, and latency move without manual clicking.
+
+Port-forward the UIs:
+
+```powershell
+kubectl -n observability port-forward svc/kube-prometheus-stack-grafana 3000:80
+kubectl -n observability port-forward svc/kube-prometheus-stack-prometheus 9090:9090
+kubectl -n observability port-forward svc/jaeger-query 16686:16686
+```
+
+Grafana is `admin` / `admin` for this local demo. Open the dashboard at
+http://localhost:3000/d/robot-shop-slo.
+
+Show:
+
+- Requests, 5xx ratio, and p95 latency by service for
+  `web`, `catalogue`, `cart`, and `payment`.
+- Deployment readiness and the Loki error panel.
+- Jaeger → service `web.robot-shop` → a trace with downstream spans.
+- Loki query `{namespace="robot-shop",service="payment"} |= "StreamLostError"`
+  or `{namespace="robot-shop"} |= "error"`.
+
+Run the deliberate incident:
+
+```powershell
+kubectl -n robot-shop scale deployment/payment --replicas=0
+kubectl -n robot-shop get pods -w
+# Wait for RobotShopServiceDown to fire (about 2–3 minutes).
+kubectl -n robot-shop scale deployment/payment --replicas=1
+```
+
+Show the alert in Prometheus at http://localhost:9090/alerts, then the recovery
+on the dashboard. The actual timeline, impact, and prevention actions are in
+[capstone2/docs/POSTMORTEM.md](../capstone2/docs/POSTMORTEM.md).
+
+State the known limitation honestly: the load generator plus the payment /
+RabbitMQ `StreamLostError` can keep the error-rate and latency alerts above
+threshold at baseline. The clean drill signal is `RobotShopServiceDown`, and
+the postmortem explains the difference.
+
+## 10. Close (1 minute)
 
 > “The app works, the pipeline ships it, the dashboard and traces explain it,
 > and rollback plus the runbook make it recoverable. The postmortem captures

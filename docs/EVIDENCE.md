@@ -4,7 +4,7 @@ This page collects the proof captured during the capstone run. Everything here
 was produced locally on 2026-10-26 (UTC). Items that require an external account
 or paid cloud resource are listed separately at the end.
 
-## Capstone 1 — Ship it
+## Capstone 1 - Ship it
 
 | Requirement | Evidence | What it proves |
 | --- | --- | --- |
@@ -18,16 +18,50 @@ The kind UI screenshots are from the NodePorts mapped to `localhost:8080` and
 `localhost:8081`: [kind vote page](evidence/screenshots/kind-vote-page.png),
 [kind result page](evidence/screenshots/kind-result-page.png).
 
-## Capstone 2 — Keep it running
+## Capstone 2 - Keep it running (Robot Shop on kind)
+
+Robot Shop is a separate application from the Voting App. It is deployed from
+the vendored chart in [`../capstone2/robot-shop`](../capstone2/robot-shop) on the
+same kind cluster, with the observability stack in namespace `observability`.
 
 | Requirement | Evidence | What it proves |
 | --- | --- | --- |
-| Dashboard as code | [Grafana dashboard](evidence/screenshots/grafana-dashboard.png) | Request rate, 5xx, p95 latency, votes by choice, queue depth, queue age, scrape targets and request volume with live data |
+| Working system | [Robot Shop UI](evidence/capstone2/robot-shop-ui.png), [healthy pods](evidence/capstone2/robot-shop-pods-healthy.txt), [Helm releases](evidence/capstone2/helm-releases.txt) | Stan's Robot Shop is running at `localhost:8090`; app pods are Ready; chart released as `robot-shop` |
+| Observability stack | [observability pods](evidence/capstone2/observability-pods.txt) | kube-prometheus-stack, Loki, Fluent Bit, Jaeger and the OTel Collector are running |
+| Dashboard as code | [dashboard JSON](../capstone2/observability/dashboards/robot-shop.json), [dashboard recovery screenshot](evidence/capstone2/robot-shop-dashboard-recovered.png) | Request rate, 5xx ratio, p95 latency, deployment readiness and Loki logs, with live data |
+| Alert firing | [Prometheus alerts page](evidence/capstone2/robot-shop-prometheus-alerts.png), [alert JSON](evidence/capstone2/robot-shop-alert-firing.json) | `RobotShopServiceDown` is `firing` for `payment`; labels, annotations and `activeAt` are captured |
+| Incident drill | [timestamps](evidence/capstone2/drill-timestamps.txt), [postmortem](../capstone2/docs/POSTMORTEM.md), [drill plan](../capstone2/docs/DRILL.md) | 4m52s payment outage; alert firing; mitigation in one scale command; 11s to Ready |
+| During outage | [dashboard during outage](evidence/capstone2/robot-shop-dashboard-firing.png), [pods during drill](evidence/capstone2/robot-shop-pods-during-drill.txt), [scaled deployment](evidence/capstone2/payment-deployment-scaled-zero.yaml) | `payment` has 0 ready replicas; total ready deployments fall from 12 to 11 |
+| Recovery | [dashboard recovered](evidence/capstone2/robot-shop-dashboard-recovered.png), [recovered alerts](evidence/capstone2/robot-shop-alerts-recovered.json) | `payment` is back at 1/1, 12 deployments Ready, no `RobotShop*` alert active |
+| Structured logs | [Loki query result](evidence/capstone2/loki-payment-error.json) | LogQL `{namespace="robot-shop",service="payment"} |= "StreamLostError"` returns the payment error with `service=payment` and `level=error` |
+| Distributed trace | [Jaeger trace list](evidence/capstone2/jaeger-web-trace.png), [trace JSON](evidence/capstone2/jaeger-web-trace.json) | `web.robot-shop`, `catalogue.robot-shop`, `cart.robot-shop` and `payment.robot-shop` traces exist; a `web` trace includes downstream spans |
+| SLO and error budget | [`SLO.md`](../capstone2/docs/SLO.md), [`ERROR_BUDGET_POLICY.md`](../capstone2/docs/ERROR_BUDGET_POLICY.md) | 99.5% availability target, 216-minute monthly budget, SLI queries and budget states |
+| Runbook linked from alert | [`RUNBOOK.md`](../capstone2/docs/RUNBOOK.md), [PrometheusRule](../capstone2/observability/robot-shop-alerts.yaml) | The alert annotation contains a `runbook_url`; the runbook names the deployment, dashboard and recovery command |
+
+The alert and dashboard paths are code, not only screenshots:
+[`robot-shop-alerts.yaml`](../capstone2/observability/robot-shop-alerts.yaml),
+[`robot-shop-dashboard.yaml`](../capstone2/observability/robot-shop-dashboard.yaml),
+[`kube-prometheus-stack-values.yaml`](../capstone2/observability/kube-prometheus-stack-values.yaml),
+[`fluent-bit-values.yaml`](../capstone2/observability/fluent-bit-values.yaml),
+[`loki-values.yaml`](../capstone2/observability/loki-values.yaml),
+[`istio-values.yaml`](../capstone2/observability/istio-values.yaml),
+[`jaeger.yaml`](../capstone2/observability/jaeger.yaml), and
+[`otel-collector.yaml`](../capstone2/observability/otel-collector.yaml).
+
+## Supplementary - Voting App observability on Docker Compose
+
+These captures are from the earlier Compose run. They remain useful for
+Capstone 1 and for showing the queue/worker SLO, but they are **not** the
+Capstone 2 cluster evidence.
+
+| Requirement | Evidence | What it proves |
+| --- | --- | --- |
+| Dashboard as code | [Grafana dashboard](evidence/screenshots/grafana-dashboard.png) | Request rate, 5xx, p95 latency, votes by choice, queue depth, queue age and scrape targets with live data |
 | Freshness alert | [Grafana during the outage](evidence/screenshots/grafana-freshness-alert.png) | Queue at 80, worker down, oldest vote at 1.55 minutes, alert threshold crossed |
 | Alert firing | [Prometheus alert page](evidence/screenshots/prometheus-alert-firing.png), [alerts JSON](evidence/prometheus-alerts-firing.json) | `VotingFreshnessAtRisk` is `firing`; `VotingQueueBacklog` is pending |
 | Recovery | [Grafana after recovery](evidence/screenshots/grafana-recovered.png), [recovered alerts JSON](evidence/prometheus-alerts-recovered.json) | Worker back at 1 replica, queue 0, oldest vote 0s, no active alerts |
 | Distributed trace | [Jaeger trace](evidence/screenshots/jaeger-vote-trace.png) | One `POST /vote` request with its child `RPUSH` span, service `vote`, 2.13 ms |
-| Structured logs | [Loki query](evidence/screenshots/loki-error-query.png), [query JSON](evidence/loki-error-query.json) | LogQL `{service="vote"} \| json \| level="error"` returns the real Redis-outage error with `trace_id` and `span_id` |
+| Structured logs | [Loki query](evidence/screenshots/loki-error-query.png), [query JSON](evidence/loki-error-query.json) | LogQL `{service="vote"} \| json \| level="error"` returns the Redis-outage error with `trace_id` and `span_id` |
 | Metrics snapshot | [Prometheus query snapshot](evidence/prometheus-query-snapshot.json) | Votes cast/processed, queue depth/age, request rate, p95 and scrape health at capture time |
 | Incident drill | [drill evidence](evidence/worker-outage-drill.md), [postmortem](postmortems/2026-10-26-worker-outage-drill.md) | 80 votes queued, none lost or duplicated, 64s delay, recovery in 4s |
 
@@ -60,17 +94,20 @@ The submission is committed on `main` and tagged `v1.0.0`; see
 ## Reproduction
 
 ```powershell
-# Local app + full observability (Prometheus, Grafana, Jaeger, Loki, Promtail)
+# Capstone 1: local app and full local observability
 powershell -ExecutionPolicy Bypass -File ./scripts/run-local.ps1 -WithObservability
 
-# Incident drill with assertions
+# Capstone 1: incident drill with assertions
 powershell -ExecutionPolicy Bypass -File ./scripts/drill-worker-outage.ps1 `
   -Votes 80 -OutageSeconds 60 -EvidencePath docs/evidence/worker-outage-drill.md
 
-# Kind install + rollback
-powershell -ExecutionPolicy Bypass -File ./scripts/stop-local.ps1
-powershell -ExecutionPolicy Bypass -File ./scripts/create-kind-cluster.ps1
-powershell -ExecutionPolicy Bypass -File ./scripts/demo-rollback.ps1
+# Capstone 2: kind cluster, Robot Shop, Istio and observability
+powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/run-capstone2.ps1
+
+# Capstone 2: payment outage drill
+kubectl -n robot-shop scale deployment/payment --replicas=0
+# after the alert fires:
+kubectl -n robot-shop scale deployment/payment --replicas=1
 ```
 
 ## Still requires an external account or paid resource
@@ -81,11 +118,16 @@ powershell -ExecutionPolicy Bypass -File ./scripts/demo-rollback.ps1
 | GitHub Actions run with SHA-tagged images | The workflow is committed and locally validated, but pushing and running it needs a GitHub repository and credentials |
 | EKS `terraform apply` / `terraform destroy` | EKS costs money and needs AWS credentials. The same chart was deployed and rolled back on kind as the local substitute |
 | Forked repository URL | A local Git repository is initialized; creating the fork requires the user's GitHub account |
+| Instructor-led incident | The instructor-led break was not available; the payment outage drill is the self-run substitute |
 
 ## Notes
 
-- Evidence screenshots were captured with headless Microsoft Edge against a
-  temporary local Grafana instance on port 3001. That instance was removed after
-  capture; the authenticated Grafana remains on port 3000.
-- The kind cluster and local Compose stack are not meant to run at the same
-  time because both bind ports 8080/8081.
+- Capstone 2 screenshots were captured with headless Microsoft Edge against the
+  Grafana instance port-forwarded from the kind cluster. Grafana anonymous
+  Viewer access was enabled temporarily for evidence capture.
+- The kind cluster owns ports 8080, 8081 and 8090. Stop Docker Compose before
+  starting kind; do not run both stacks at the same time.
+- Jaeger receives Istio mesh traces through the Zipkin endpoint (`9411`). The
+  OTel Collector remains installed for application-level instrumentation, but
+  the Envoy OTel gRPC exporter in this Istio version sent HTTP/1.1 to the gRPC
+  receiver, so the mesh path uses Zipkin.

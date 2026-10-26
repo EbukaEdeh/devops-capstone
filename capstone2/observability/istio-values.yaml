@@ -1,0 +1,33 @@
+# Minimal Istio control plane for kind.
+# The sidecars provide L7 request/error/latency metrics for the Robot Shop
+# services and send OpenTelemetry spans to the collector in `observability`.
+meshConfig:
+  enablePrometheusMerge: true
+  extensionProviders:
+    - name: otel
+      opentelemetry:
+        service: otel-collector.observability.svc.cluster.local
+        port: 4317
+    - name: jaeger
+      zipkin:
+        service: jaeger-collector.observability.svc.cluster.local
+        port: 9411
+
+pilot:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 1Gi
+
+global:
+  proxy:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 32Mi
+      limits:
+        cpu: 200m
+        memory: 256Mi

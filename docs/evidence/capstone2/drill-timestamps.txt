@@ -1,0 +1,19 @@
+Robot Shop payment outage drill - timestamps
+All dates 2026-10-26. Local time is America/Chicago (CDT, UTC-5).
+
+| Event | Local (CDT) | UTC |
+| --- | --- | --- |
+| Baseline captured; payment 1/1; HighErrorRate/HighLatency already firing | 18:20:19 | 23:20:19 |
+| T0: kubectl scale deployment/payment --replicas=0 | 18:20:20 | 23:20:20 |
+| RobotShopServiceDown enters pending (activeAt) | 18:20:53 | 23:20:53 |
+| RobotShopServiceDown observed firing | 18:23:46 | 23:23:46 |
+| Firing evidence captured (JSON, Prometheus, Grafana) | 18:23:52 | 23:23:52 |
+| Mitigation: kubectl scale deployment/payment --replicas=1 | 18:25:12 | 23:25:12 |
+| New payment pod Ready (2/2) | 18:25:23 | 23:25:23 |
+| Alert cleared (empty RobotShop alert set) | 18:25:58 | 23:25:58 |
+
+Derived:
+- Payment outage duration: 4m52s (23:20:20 to 23:25:12).
+- Time from trigger to observed firing: 3m26s.
+- Time from mitigation to Ready: 11s.
+- Time from mitigation to alert clear: 46s.

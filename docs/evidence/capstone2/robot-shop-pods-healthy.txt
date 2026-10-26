@@ -1,0 +1,14 @@
+﻿NAME                         READY   STATUS    RESTARTS   AGE     IP            NODE                            NOMINATED NODE   READINESS GATES
+cart-5959f96f47-g64ks        2/2     Running   0          22m     10.244.0.66   voting-capstone-control-plane   <none>           <none>
+catalogue-7455646fdd-mtmjs   2/2     Running   0          22m     10.244.0.65   voting-capstone-control-plane   <none>           <none>
+dispatch-7f849ccb6b-bpr7n    1/1     Running   0          78m     10.244.0.12   voting-capstone-control-plane   <none>           <none>
+load-6584c999d5-ncxhw        2/2     Running   0          29m     10.244.0.61   voting-capstone-control-plane   <none>           <none>
+mongodb-7d5c9874d8-l6c67     1/1     Running   0          78m     10.244.0.15   voting-capstone-control-plane   <none>           <none>
+mysql-7b854d6c96-d7vzp       1/1     Running   0          44m     10.244.0.38   voting-capstone-control-plane   <none>           <none>
+payment-6947bcbb75-zqt5l     2/2     Running   0          2m25s   10.244.0.75   voting-capstone-control-plane   <none>           <none>
+rabbitmq-6bcdb6855-p2jm7     2/2     Running   0          32m     10.244.0.55   voting-capstone-control-plane   <none>           <none>
+ratings-69687cbbd5-qtwqv     1/1     Running   0          43m     10.244.0.40   voting-capstone-control-plane   <none>           <none>
+redis-0                      1/1     Running   0          78m     10.244.0.17   voting-capstone-control-plane   <none>           <none>
+shipping-f4b55658f-jhpmk     1/1     Running   0          43m     10.244.0.42   voting-capstone-control-plane   <none>           <none>
+user-854856fd58-r7btc        1/1     Running   0          78m     10.244.0.10   voting-capstone-control-plane   <none>           <none>
+web-59c994995f-kdq7z         2/2     Running   0          22m     10.244.0.64   voting-capstone-control-plane   <none>           <none>

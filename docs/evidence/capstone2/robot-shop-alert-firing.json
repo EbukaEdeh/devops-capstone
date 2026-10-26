@@ -1,0 +1,130 @@
+﻿{
+    "status":  "success",
+    "data":  {
+                 "alerts":  [
+                                {
+                                    "labels":  {
+                                                   "alertname":  "CPUThrottlingHigh",
+                                                   "container":  "web",
+                                                   "instance":  "172.20.0.5:10250",
+                                                   "namespace":  "robot-shop",
+                                                   "pod":  "web-59c994995f-kdq7z",
+                                                   "service":  "kube-prometheus-stack-kubelet",
+                                                   "severity":  "info"
+                                               },
+                                    "annotations":  {
+                                                        "description":  "100% throttling of CPU in namespace robot-shop for container web in pod web-59c994995f-kdq7z on cluster .",
+                                                        "runbook_url":  "https://runbooks.prometheus-operator.dev/runbooks/kubernetes/cputhrottlinghigh",
+                                                        "summary":  "Processes experience elevated CPU throttling."
+                                                    },
+                                    "state":  "firing",
+                                    "activeAt":  "2026-10-26T23:05:17.079713975Z",
+                                    "value":  "1e+00"
+                                },
+                                {
+                                    "labels":  {
+                                                   "alertname":  "CPUThrottlingHigh",
+                                                   "container":  "load",
+                                                   "instance":  "172.20.0.5:10250",
+                                                   "namespace":  "robot-shop",
+                                                   "pod":  "load-6584c999d5-ncxhw",
+                                                   "service":  "kube-prometheus-stack-kubelet",
+                                                   "severity":  "info"
+                                               },
+                                    "annotations":  {
+                                                        "description":  "34.64% throttling of CPU in namespace robot-shop for container load in pod load-6584c999d5-ncxhw on cluster .",
+                                                        "runbook_url":  "https://runbooks.prometheus-operator.dev/runbooks/kubernetes/cputhrottlinghigh",
+                                                        "summary":  "Processes experience elevated CPU throttling."
+                                                    },
+                                    "state":  "pending",
+                                    "activeAt":  "2026-10-26T23:16:47.079713975Z",
+                                    "value":  "3.464154892726321e-01"
+                                },
+                                {
+                                    "labels":  {
+                                                   "alertname":  "CPUThrottlingHigh",
+                                                   "container":  "payment",
+                                                   "instance":  "172.20.0.5:10250",
+                                                   "namespace":  "robot-shop",
+                                                   "pod":  "payment-6947bcbb75-w996k",
+                                                   "service":  "kube-prometheus-stack-kubelet",
+                                                   "severity":  "info"
+                                               },
+                                    "annotations":  {
+                                                        "description":  "49.29% throttling of CPU in namespace robot-shop for container payment in pod payment-6947bcbb75-w996k on cluster .",
+                                                        "runbook_url":  "https://runbooks.prometheus-operator.dev/runbooks/kubernetes/cputhrottlinghigh",
+                                                        "summary":  "Processes experience elevated CPU throttling."
+                                                    },
+                                    "state":  "pending",
+                                    "activeAt":  "2026-10-26T23:20:32.079713975Z",
+                                    "value":  "4.9293563579277866e-01"
+                                },
+                                {
+                                    "labels":  {
+                                                   "alertname":  "CPUThrottlingHigh",
+                                                   "container":  "shipping",
+                                                   "instance":  "172.20.0.5:10250",
+                                                   "namespace":  "robot-shop",
+                                                   "pod":  "shipping-f4b55658f-jhpmk",
+                                                   "service":  "kube-prometheus-stack-kubelet",
+                                                   "severity":  "info"
+                                               },
+                                    "annotations":  {
+                                                        "description":  "38.7% throttling of CPU in namespace robot-shop for container shipping in pod shipping-f4b55658f-jhpmk on cluster .",
+                                                        "runbook_url":  "https://runbooks.prometheus-operator.dev/runbooks/kubernetes/cputhrottlinghigh",
+                                                        "summary":  "Processes experience elevated CPU throttling."
+                                                    },
+                                    "state":  "pending",
+                                    "activeAt":  "2026-10-26T23:21:17.079713975Z",
+                                    "value":  "3.870346598202824e-01"
+                                },
+                                {
+                                    "labels":  {
+                                                   "alertname":  "RobotShopServiceDown",
+                                                   "deployment":  "payment",
+                                                   "service":  "robot-shop",
+                                                   "severity":  "critical",
+                                                   "slo":  "availability"
+                                               },
+                                    "annotations":  {
+                                                        "dashboard_url":  "http://localhost:3000/d/robot-shop-slo",
+                                                        "description":  "Deployment payment has had zero ready replicas for 2 minutes. The service is unavailable.",
+                                                        "runbook_url":  "https://github.com/your-org/capstone-project/blob/main/capstone2/docs/RUNBOOK.md",
+                                                        "summary":  "Robot Shop deployment payment has no ready replicas"
+                                                    },
+                                    "state":  "firing",
+                                    "activeAt":  "2026-10-26T23:20:53.164207022Z",
+                                    "value":  "0e+00"
+                                },
+                                {
+                                    "labels":  {
+                                                   "alertname":  "Watchdog",
+                                                   "severity":  "none"
+                                               },
+                                    "annotations":  {
+                                                        "description":  "This is an alert meant to ensure that the entire alerting pipeline is functional.\nThis alert is always firing, therefore it should always be firing in Alertmanager\nand always fire against a receiver. There are integrations with various notification\nmechanisms that send a notification when this alert is not firing. For example the\n\"DeadMansSnitch\" integration in PagerDuty.\n",
+                                                        "runbook_url":  "https://runbooks.prometheus-operator.dev/runbooks/general/watchdog",
+                                                        "summary":  "An alert that should always be firing to certify that Alertmanager is working properly."
+                                                    },
+                                    "state":  "firing",
+                                    "activeAt":  "2026-10-26T22:53:33.762821551Z",
+                                    "value":  "1e+00"
+                                },
+                                {
+                                    "labels":  {
+                                                   "alertname":  "InfoInhibitor",
+                                                   "namespace":  "robot-shop",
+                                                   "severity":  "none"
+                                               },
+                                    "annotations":  {
+                                                        "description":  "This is an alert that is used to inhibit info alerts.\nBy themselves, the info-level alerts are sometimes very noisy, but they are relevant when combined with\nother alerts.\nThis alert fires whenever there\u0027s a severity=\"info\" alert, and stops firing when another alert with a\nseverity of \u0027warning\u0027 or \u0027critical\u0027 starts firing on the same namespace.\nThis alert should be routed to a null receiver and configured to inhibit alerts with severity=\"info\".\n",
+                                                        "runbook_url":  "https://runbooks.prometheus-operator.dev/runbooks/general/infoinhibitor",
+                                                        "summary":  "Info-level alert inhibition."
+                                                    },
+                                    "state":  "firing",
+                                    "activeAt":  "2026-10-26T22:54:03.762821551Z",
+                                    "value":  "1e+00"
+                                }
+                            ]
+             }
+}

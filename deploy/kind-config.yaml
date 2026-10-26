@@ -10,3 +10,6 @@ nodes:
       - containerPort: 30081
         hostPort: 8081
         protocol: TCP
+      - containerPort: 30090
+        hostPort: 8090
+        protocol: TCP

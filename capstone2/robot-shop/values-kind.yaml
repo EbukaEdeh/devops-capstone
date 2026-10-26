@@ -1,0 +1,11 @@
+# kind overrides for Stan's Robot Shop.
+# The web NodePort is mapped to host port 8090 by deploy/kind-config.yaml.
+nodeport: true
+web:
+  nodePort: 30090
+redis:
+  storageClassName: standard
+payment:
+  gateway: https://www.paypal.com
+image:
+  pullPolicy: IfNotPresent

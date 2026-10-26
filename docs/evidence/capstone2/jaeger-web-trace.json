@@ -1,0 +1,1076 @@
+﻿{
+    "services":  [
+                     "catalogue.robot-shop",
+                     "payment.robot-shop",
+                     "jaeger-all-in-one",
+                     "web.robot-shop",
+                     "cart.robot-shop",
+                     "load.robot-shop"
+                 ],
+    "trace_count":  3,
+    "traces":  [
+                   {
+                       "traceID":  "562be618d7caca940b8c7278980808d5",
+                       "spans":  [
+                                     {
+                                         "traceID":  "562be618d7caca940b8c7278980808d5",
+                                         "spanID":  "09f984f942948d29",
+                                         "operationName":  "web.robot-shop.svc.cluster.local:8080/*",
+                                         "references":  [
+                                                            {
+                                                                "refType":  "CHILD_OF",
+                                                                "traceID":  "562be618d7caca940b8c7278980808d5",
+                                                                "spanID":  "0b8c7278980808d5"
+                                                            }
+                                                        ],
+                                         "startTime":  1793057256215996,
+                                         "duration":  12816,
+                                         "tags":  [
+                                                      {
+                                                          "key":  "component",
+                                                          "type":  "string",
+                                                          "value":  "proxy"
+                                                      },
+                                                      {
+                                                          "key":  "downstream_cluster",
+                                                          "type":  "string",
+                                                          "value":  "-"
+                                                      },
+                                                      {
+                                                          "key":  "guid:x-request-id",
+                                                          "type":  "string",
+                                                          "value":  "51a7c304-17c0-9356-83c8-57ab11fc9d5e"
+                                                      },
+                                                      {
+                                                          "key":  "http.method",
+                                                          "type":  "string",
+                                                          "value":  "GET"
+                                                      },
+                                                      {
+                                                          "key":  "http.protocol",
+                                                          "type":  "string",
+                                                          "value":  "HTTP/1.1"
+                                                      },
+                                                      {
+                                                          "key":  "http.status_code",
+                                                          "type":  "string",
+                                                          "value":  "200"
+                                                      },
+                                                      {
+                                                          "key":  "http.url",
+                                                          "type":  "string",
+                                                          "value":  "http://web:8080//api/cart/update/anonymous-856/RED/2"
+                                                      },
+                                                      {
+                                                          "key":  "internal.span.format",
+                                                          "type":  "string",
+                                                          "value":  "zipkin"
+                                                      },
+                                                      {
+                                                          "key":  "istio.canonical_revision",
+                                                          "type":  "string",
+                                                          "value":  "latest"
+                                                      },
+                                                      {
+                                                          "key":  "istio.canonical_service",
+                                                          "type":  "string",
+                                                          "value":  "web"
+                                                      },
+                                                      {
+                                                          "key":  "istio.cluster_id",
+                                                          "type":  "string",
+                                                          "value":  "Kubernetes"
+                                                      },
+                                                      {
+                                                          "key":  "istio.mesh_id",
+                                                          "type":  "string",
+                                                          "value":  "cluster.local"
+                                                      },
+                                                      {
+                                                          "key":  "istio.namespace",
+                                                          "type":  "string",
+                                                          "value":  "robot-shop"
+                                                      },
+                                                      {
+                                                          "key":  "net.host.ip",
+                                                          "type":  "string",
+                                                          "value":  "10.244.0.64"
+                                                      },
+                                                      {
+                                                          "key":  "node_id",
+                                                          "type":  "string",
+                                                          "value":  "sidecar~10.244.0.64~web-59c994995f-kdq7z.robot-shop~robot-shop.svc.cluster.local"
+                                                      },
+                                                      {
+                                                          "key":  "peer.address",
+                                                          "type":  "string",
+                                                          "value":  "10.244.0.61"
+                                                      },
+                                                      {
+                                                          "key":  "request_size",
+                                                          "type":  "string",
+                                                          "value":  "0"
+                                                      },
+                                                      {
+                                                          "key":  "response_flags",
+                                                          "type":  "string",
+                                                          "value":  "-"
+                                                      },
+                                                      {
+                                                          "key":  "response_size",
+                                                          "type":  "string",
+                                                          "value":  "212"
+                                                      },
+                                                      {
+                                                          "key":  "span.kind",
+                                                          "type":  "string",
+                                                          "value":  "server"
+                                                      },
+                                                      {
+                                                          "key":  "upstream_cluster",
+                                                          "type":  "string",
+                                                          "value":  "inbound|8080||"
+                                                      },
+                                                      {
+                                                          "key":  "upstream_cluster.name",
+                                                          "type":  "string",
+                                                          "value":  "inbound|8080||;"
+                                                      },
+                                                      {
+                                                          "key":  "user_agent",
+                                                          "type":  "string",
+                                                          "value":  "python-requests/2.26.0"
+                                                      }
+                                                  ],
+                                         "logs":  [
+                                                      {
+                                                          "timestamp":  1793057256229218,
+                                                          "fields":  [
+                                                                         {
+                                                                             "key":  "event",
+                                                                             "type":  "string",
+                                                                             "value":  "ss"
+                                                                         }
+                                                                     ]
+                                                      }
+                                                  ],
+                                         "processID":  "p1",
+                                         "warnings":  null
+                                     },
+                                     {
+                                         "traceID":  "562be618d7caca940b8c7278980808d5",
+                                         "spanID":  "3722652e20f1a59a",
+                                         "operationName":  "cart.robot-shop.svc.cluster.local:8080/*",
+                                         "references":  [
+                                                            {
+                                                                "refType":  "CHILD_OF",
+                                                                "traceID":  "562be618d7caca940b8c7278980808d5",
+                                                                "spanID":  "09f984f942948d29"
+                                                            }
+                                                        ],
+                                         "startTime":  1793057256218081,
+                                         "duration":  8545,
+                                         "tags":  [
+                                                      {
+                                                          "key":  "component",
+                                                          "type":  "string",
+                                                          "value":  "proxy"
+                                                      },
+                                                      {
+                                                          "key":  "downstream_cluster",
+                                                          "type":  "string",
+                                                          "value":  "-"
+                                                      },
+                                                      {
+                                                          "key":  "guid:x-request-id",
+                                                          "type":  "string",
+                                                          "value":  "51a7c304-17c0-9356-83c8-57ab11fc9d5e"
+                                                      },
+                                                      {
+                                                          "key":  "http.method",
+                                                          "type":  "string",
+                                                          "value":  "GET"
+                                                      },
+                                                      {
+                                                          "key":  "http.protocol",
+                                                          "type":  "string",
+                                                          "value":  "HTTP/1.1"
+                                                      },
+                                                      {
+                                                          "key":  "http.status_code",
+                                                          "type":  "string",
+                                                          "value":  "200"
+                                                      },
+                                                      {
+                                                          "key":  "http.url",
+                                                          "type":  "string",
+                                                          "value":  "http://cart:8080/update/anonymous-856/RED/2"
+                                                      },
+                                                      {
+                                                          "key":  "internal.span.format",
+                                                          "type":  "string",
+                                                          "value":  "zipkin"
+                                                      },
+                                                      {
+                                                          "key":  "istio.canonical_revision",
+                                                          "type":  "string",
+                                                          "value":  "latest"
+                                                      },
+                                                      {
+                                                          "key":  "istio.canonical_service",
+                                                          "type":  "string",
+                                                          "value":  "web"
+                                                      },
+                                                      {
+                                                          "key":  "istio.cluster_id",
+                                                          "type":  "string",
+                                                          "value":  "Kubernetes"
+                                                      },
+                                                      {
+                                                          "key":  "istio.mesh_id",
+                                                          "type":  "string",
+                                                          "value":  "cluster.local"
+                                                      },
+                                                      {
+                                                          "key":  "istio.namespace",
+                                                          "type":  "string",
+                                                          "value":  "robot-shop"
+                                                      },
+                                                      {
+                                                          "key":  "net.host.ip",
+                                                          "type":  "string",
+                                                          "value":  "10.244.0.64"
+                                                      },
+                                                      {
+                                                          "key":  "node_id",
+                                                          "type":  "string",
+                                                          "value":  "sidecar~10.244.0.64~web-59c994995f-kdq7z.robot-shop~robot-shop.svc.cluster.local"
+                                                      },
+                                                      {
+                                                          "key":  "peer.address",
+                                                          "type":  "string",
+                                                          "value":  "10.244.0.64"
+                                                      },
+                                                      {
+                                                          "key":  "request_size",
+                                                          "type":  "string",
+                                                          "value":  "0"
+                                                      },
+                                                      {
+                                                          "key":  "response_flags",
+                                                          "type":  "string",
+                                                          "value":  "-"
+                                                      },
+                                                      {
+                                                          "key":  "response_size",
+                                                          "type":  "string",
+                                                          "value":  "212"
+                                                      },
+                                                      {
+                                                          "key":  "span.kind",
+                                                          "type":  "string",
+                                                          "value":  "client"
+                                                      },
+                                                      {
+                                                          "key":  "upstream_cluster",
+                                                          "type":  "string",
+                                                          "value":  "outbound|8080||cart.robot-shop.svc.cluster.local"
+                                                      },
+                                                      {
+                                                          "key":  "upstream_cluster.name",
+                                                          "type":  "string",
+                                                          "value":  "outbound|8080||cart.robot-shop.svc.cluster.local;"
+                                                      },
+                                                      {
+                                                          "key":  "user_agent",
+                                                          "type":  "string",
+                                                          "value":  "python-requests/2.26.0"
+                                                      }
+                                                  ],
+                                         "logs":  [
+                                                      {
+                                                          "timestamp":  1793057256226911,
+                                                          "fields":  [
+                                                                         {
+                                                                             "key":  "event",
+                                                                             "type":  "string",
+                                                                             "value":  "cr"
+                                                                         }
+                                                                     ]
+                                                      }
+                                                  ],
+                                         "processID":  "p1",
+                                         "warnings":  null
+                                     },
+                                     {
+                                         "traceID":  "562be618d7caca940b8c7278980808d5",
+                                         "spanID":  "0b8c7278980808d5",
+                                         "operationName":  "web.robot-shop.svc.cluster.local:8080/*",
+                                         "references":  [
+
+                                                        ],
+                                         "startTime":  1793057256214745,
+                                         "duration":  15101,
+                                         "tags":  [
+                                                      {
+                                                          "key":  "component",
+                                                          "type":  "string",
+                                                          "value":  "proxy"
+                                                      },
+                                                      {
+                                                          "key":  "downstream_cluster",
+                                                          "type":  "string",
+                                                          "value":  "-"
+                                                      },
+                                                      {
+                                                          "key":  "guid:x-request-id",
+                                                          "type":  "string",
+                                                          "value":  "51a7c304-17c0-9356-83c8-57ab11fc9d5e"
+                                                      },
+                                                      {
+                                                          "key":  "http.method",
+                                                          "type":  "string",
+                                                          "value":  "GET"
+                                                      },
+                                                      {
+                                                          "key":  "http.protocol",
+                                                          "type":  "string",
+                                                          "value":  "HTTP/1.1"
+                                                      },
+                                                      {
+                                                          "key":  "http.status_code",
+                                                          "type":  "string",
+                                                          "value":  "200"
+                                                      },
+                                                      {
+                                                          "key":  "http.url",
+                                                          "type":  "string",
+                                                          "value":  "http://web:8080//api/cart/update/anonymous-856/RED/2"
+                                                      },
+                                                      {
+                                                          "key":  "internal.span.format",
+                                                          "type":  "string",
+                                                          "value":  "zipkin"
+                                                      },
+                                                      {
+                                                          "key":  "istio.canonical_revision",
+                                                          "type":  "string",
+                                                          "value":  "latest"
+                                                      },
+                                                      {
+                                                          "key":  "istio.canonical_service",
+                                                          "type":  "string",
+                                                          "value":  "load"
+                                                      },
+                                                      {
+                                                          "key":  "istio.cluster_id",
+                                                          "type":  "string",
+                                                          "value":  "Kubernetes"
+                                                      },
+                                                      {
+                                                          "key":  "istio.mesh_id",
+                                                          "type":  "string",
+                                                          "value":  "cluster.local"
+                                                      },
+                                                      {
+                                                          "key":  "istio.namespace",
+                                                          "type":  "string",
+                                                          "value":  "robot-shop"
+                                                      },
+                                                      {
+                                                          "key":  "net.host.ip",
+                                                          "type":  "string",
+                                                          "value":  "10.244.0.61"
+                                                      },
+                                                      {
+                                                          "key":  "node_id",
+                                                          "type":  "string",
+                                                          "value":  "sidecar~10.244.0.61~load-6584c999d5-ncxhw.robot-shop~robot-shop.svc.cluster.local"
+                                                      },
+                                                      {
+                                                          "key":  "peer.address",
+                                                          "type":  "string",
+                                                          "value":  "10.244.0.61"
+                                                      },
+                                                      {
+                                                          "key":  "request_size",
+                                                          "type":  "string",
+                                                          "value":  "0"
+                                                      },
+                                                      {
+                                                          "key":  "response_flags",
+                                                          "type":  "string",
+                                                          "value":  "-"
+                                                      },
+                                                      {
+                                                          "key":  "response_size",
+                                                          "type":  "string",
+                                                          "value":  "212"
+                                                      },
+                                                      {
+                                                          "key":  "span.kind",
+                                                          "type":  "string",
+                                                          "value":  "client"
+                                                      },
+                                                      {
+                                                          "key":  "upstream_cluster",
+                                                          "type":  "string",
+                                                          "value":  "outbound|8080||web.robot-shop.svc.cluster.local"
+                                                      },
+                                                      {
+                                                          "key":  "upstream_cluster.name",
+                                                          "type":  "string",
+                                                          "value":  "outbound|8080||web.robot-shop.svc.cluster.local;"
+                                                      },
+                                                      {
+                                                          "key":  "user_agent",
+                                                          "type":  "string",
+                                                          "value":  "python-requests/2.26.0"
+                                                      }
+                                                  ],
+                                         "logs":  [
+                                                      {
+                                                          "timestamp":  1793057256230024,
+                                                          "fields":  [
+                                                                         {
+                                                                             "key":  "event",
+                                                                             "type":  "string",
+                                                                             "value":  "cr"
+                                                                         }
+                                                                     ]
+                                                      }
+                                                  ],
+                                         "processID":  "p2",
+                                         "warnings":  null
+                                     }
+                                 ],
+                       "processes":  {
+                                         "p1":  {
+                                                    "serviceName":  "web.robot-shop",
+                                                    "tags":  [
+
+                                                             ]
+                                                },
+                                         "p2":  {
+                                                    "serviceName":  "load.robot-shop",
+                                                    "tags":  [
+
+                                                             ]
+                                                }
+                                     },
+                       "warnings":  null
+                   },
+                   {
+                       "traceID":  "0bc35241165e8f082ca94a3969f28a40",
+                       "spans":  [
+                                     {
+                                         "traceID":  "0bc35241165e8f082ca94a3969f28a40",
+                                         "spanID":  "7bcde964bef33ee1",
+                                         "operationName":  "web.robot-shop.svc.cluster.local:8080/*",
+                                         "references":  [
+                                                            {
+                                                                "refType":  "CHILD_OF",
+                                                                "traceID":  "0bc35241165e8f082ca94a3969f28a40",
+                                                                "spanID":  "2ca94a3969f28a40"
+                                                            }
+                                                        ],
+                                         "startTime":  1793057256236682,
+                                         "duration":  69379,
+                                         "tags":  [
+                                                      {
+                                                          "key":  "component",
+                                                          "type":  "string",
+                                                          "value":  "proxy"
+                                                      },
+                                                      {
+                                                          "key":  "downstream_cluster",
+                                                          "type":  "string",
+                                                          "value":  "-"
+                                                      },
+                                                      {
+                                                          "key":  "guid:x-request-id",
+                                                          "type":  "string",
+                                                          "value":  "780d7fea-4f4d-96b0-899a-56e29ea7722a"
+                                                      },
+                                                      {
+                                                          "key":  "http.method",
+                                                          "type":  "string",
+                                                          "value":  "GET"
+                                                      },
+                                                      {
+                                                          "key":  "http.protocol",
+                                                          "type":  "string",
+                                                          "value":  "HTTP/1.1"
+                                                      },
+                                                      {
+                                                          "key":  "http.status_code",
+                                                          "type":  "string",
+                                                          "value":  "200"
+                                                      },
+                                                      {
+                                                          "key":  "http.url",
+                                                          "type":  "string",
+                                                          "value":  "http://web:8080//api/shipping/codes"
+                                                      },
+                                                      {
+                                                          "key":  "internal.span.format",
+                                                          "type":  "string",
+                                                          "value":  "zipkin"
+                                                      },
+                                                      {
+                                                          "key":  "istio.canonical_revision",
+                                                          "type":  "string",
+                                                          "value":  "latest"
+                                                      },
+                                                      {
+                                                          "key":  "istio.canonical_service",
+                                                          "type":  "string",
+                                                          "value":  "web"
+                                                      },
+                                                      {
+                                                          "key":  "istio.cluster_id",
+                                                          "type":  "string",
+                                                          "value":  "Kubernetes"
+                                                      },
+                                                      {
+                                                          "key":  "istio.mesh_id",
+                                                          "type":  "string",
+                                                          "value":  "cluster.local"
+                                                      },
+                                                      {
+                                                          "key":  "istio.namespace",
+                                                          "type":  "string",
+                                                          "value":  "robot-shop"
+                                                      },
+                                                      {
+                                                          "key":  "net.host.ip",
+                                                          "type":  "string",
+                                                          "value":  "10.244.0.64"
+                                                      },
+                                                      {
+                                                          "key":  "node_id",
+                                                          "type":  "string",
+                                                          "value":  "sidecar~10.244.0.64~web-59c994995f-kdq7z.robot-shop~robot-shop.svc.cluster.local"
+                                                      },
+                                                      {
+                                                          "key":  "peer.address",
+                                                          "type":  "string",
+                                                          "value":  "10.244.0.61"
+                                                      },
+                                                      {
+                                                          "key":  "request_size",
+                                                          "type":  "string",
+                                                          "value":  "0"
+                                                      },
+                                                      {
+                                                          "key":  "response_flags",
+                                                          "type":  "string",
+                                                          "value":  "-"
+                                                      },
+                                                      {
+                                                          "key":  "response_size",
+                                                          "type":  "string",
+                                                          "value":  "293"
+                                                      },
+                                                      {
+                                                          "key":  "span.kind",
+                                                          "type":  "string",
+                                                          "value":  "server"
+                                                      },
+                                                      {
+                                                          "key":  "upstream_cluster",
+                                                          "type":  "string",
+                                                          "value":  "inbound|8080||"
+                                                      },
+                                                      {
+                                                          "key":  "upstream_cluster.name",
+                                                          "type":  "string",
+                                                          "value":  "inbound|8080||;"
+                                                      },
+                                                      {
+                                                          "key":  "user_agent",
+                                                          "type":  "string",
+                                                          "value":  "python-requests/2.26.0"
+                                                      }
+                                                  ],
+                                         "logs":  [
+                                                      {
+                                                          "timestamp":  1793057256306283,
+                                                          "fields":  [
+                                                                         {
+                                                                             "key":  "event",
+                                                                             "type":  "string",
+                                                                             "value":  "ss"
+                                                                         }
+                                                                     ]
+                                                      }
+                                                  ],
+                                         "processID":  "p1",
+                                         "warnings":  [
+                                                          "invalid parent span IDs=2ca94a3969f28a40; skipping clock skew adjustment"
+                                                      ]
+                                     },
+                                     {
+                                         "traceID":  "0bc35241165e8f082ca94a3969f28a40",
+                                         "spanID":  "02c9195fc03e837a",
+                                         "operationName":  "shipping.robot-shop.svc.cluster.local:8080/*",
+                                         "references":  [
+                                                            {
+                                                                "refType":  "CHILD_OF",
+                                                                "traceID":  "0bc35241165e8f082ca94a3969f28a40",
+                                                                "spanID":  "7bcde964bef33ee1"
+                                                            }
+                                                        ],
+                                         "startTime":  1793057256237795,
+                                         "duration":  6715,
+                                         "tags":  [
+                                                      {
+                                                          "key":  "component",
+                                                          "type":  "string",
+                                                          "value":  "proxy"
+                                                      },
+                                                      {
+                                                          "key":  "downstream_cluster",
+                                                          "type":  "string",
+                                                          "value":  "-"
+                                                      },
+                                                      {
+                                                          "key":  "guid:x-request-id",
+                                                          "type":  "string",
+                                                          "value":  "780d7fea-4f4d-96b0-899a-56e29ea7722a"
+                                                      },
+                                                      {
+                                                          "key":  "http.method",
+                                                          "type":  "string",
+                                                          "value":  "GET"
+                                                      },
+                                                      {
+                                                          "key":  "http.protocol",
+                                                          "type":  "string",
+                                                          "value":  "HTTP/1.1"
+                                                      },
+                                                      {
+                                                          "key":  "http.status_code",
+                                                          "type":  "string",
+                                                          "value":  "200"
+                                                      },
+                                                      {
+                                                          "key":  "http.url",
+                                                          "type":  "string",
+                                                          "value":  "http://shipping:8080/codes"
+                                                      },
+                                                      {
+                                                          "key":  "internal.span.format",
+                                                          "type":  "string",
+                                                          "value":  "zipkin"
+                                                      },
+                                                      {
+                                                          "key":  "istio.canonical_revision",
+                                                          "type":  "string",
+                                                          "value":  "latest"
+                                                      },
+                                                      {
+                                                          "key":  "istio.canonical_service",
+                                                          "type":  "string",
+                                                          "value":  "web"
+                                                      },
+                                                      {
+                                                          "key":  "istio.cluster_id",
+                                                          "type":  "string",
+                                                          "value":  "Kubernetes"
+                                                      },
+                                                      {
+                                                          "key":  "istio.mesh_id",
+                                                          "type":  "string",
+                                                          "value":  "cluster.local"
+                                                      },
+                                                      {
+                                                          "key":  "istio.namespace",
+                                                          "type":  "string",
+                                                          "value":  "robot-shop"
+                                                      },
+                                                      {
+                                                          "key":  "net.host.ip",
+                                                          "type":  "string",
+                                                          "value":  "10.244.0.64"
+                                                      },
+                                                      {
+                                                          "key":  "node_id",
+                                                          "type":  "string",
+                                                          "value":  "sidecar~10.244.0.64~web-59c994995f-kdq7z.robot-shop~robot-shop.svc.cluster.local"
+                                                      },
+                                                      {
+                                                          "key":  "peer.address",
+                                                          "type":  "string",
+                                                          "value":  "10.244.0.64"
+                                                      },
+                                                      {
+                                                          "key":  "request_size",
+                                                          "type":  "string",
+                                                          "value":  "0"
+                                                      },
+                                                      {
+                                                          "key":  "response_flags",
+                                                          "type":  "string",
+                                                          "value":  "-"
+                                                      },
+                                                      {
+                                                          "key":  "response_size",
+                                                          "type":  "string",
+                                                          "value":  "293"
+                                                      },
+                                                      {
+                                                          "key":  "span.kind",
+                                                          "type":  "string",
+                                                          "value":  "client"
+                                                      },
+                                                      {
+                                                          "key":  "upstream_cluster",
+                                                          "type":  "string",
+                                                          "value":  "outbound|8080||shipping.robot-shop.svc.cluster.local"
+                                                      },
+                                                      {
+                                                          "key":  "upstream_cluster.name",
+                                                          "type":  "string",
+                                                          "value":  "outbound|8080||shipping.robot-shop.svc.cluster.local;"
+                                                      },
+                                                      {
+                                                          "key":  "user_agent",
+                                                          "type":  "string",
+                                                          "value":  "python-requests/2.26.0"
+                                                      }
+                                                  ],
+                                         "logs":  [
+                                                      {
+                                                          "timestamp":  1793057256244696,
+                                                          "fields":  [
+                                                                         {
+                                                                             "key":  "event",
+                                                                             "type":  "string",
+                                                                             "value":  "cr"
+                                                                         }
+                                                                     ]
+                                                      }
+                                                  ],
+                                         "processID":  "p1",
+                                         "warnings":  null
+                                     }
+                                 ],
+                       "processes":  {
+                                         "p1":  {
+                                                    "serviceName":  "web.robot-shop",
+                                                    "tags":  [
+
+                                                             ]
+                                                }
+                                     },
+                       "warnings":  null
+                   },
+                   {
+                       "traceID":  "1910ec97e9d8706f6b1c530e3bc3257f",
+                       "spans":  [
+                                     {
+                                         "traceID":  "1910ec97e9d8706f6b1c530e3bc3257f",
+                                         "spanID":  "9e7dfb6f382140e6",
+                                         "operationName":  "web.robot-shop.svc.cluster.local:8080/*",
+                                         "references":  [
+                                                            {
+                                                                "refType":  "CHILD_OF",
+                                                                "traceID":  "1910ec97e9d8706f6b1c530e3bc3257f",
+                                                                "spanID":  "6b1c530e3bc3257f"
+                                                            }
+                                                        ],
+                                         "startTime":  1793057256311389,
+                                         "duration":  7045,
+                                         "tags":  [
+                                                      {
+                                                          "key":  "component",
+                                                          "type":  "string",
+                                                          "value":  "proxy"
+                                                      },
+                                                      {
+                                                          "key":  "downstream_cluster",
+                                                          "type":  "string",
+                                                          "value":  "-"
+                                                      },
+                                                      {
+                                                          "key":  "guid:x-request-id",
+                                                          "type":  "string",
+                                                          "value":  "978640d3-4677-9838-8189-63e27dd97168"
+                                                      },
+                                                      {
+                                                          "key":  "http.method",
+                                                          "type":  "string",
+                                                          "value":  "GET"
+                                                      },
+                                                      {
+                                                          "key":  "http.protocol",
+                                                          "type":  "string",
+                                                          "value":  "HTTP/1.1"
+                                                      },
+                                                      {
+                                                          "key":  "http.status_code",
+                                                          "type":  "string",
+                                                          "value":  "200"
+                                                      },
+                                                      {
+                                                          "key":  "http.url",
+                                                          "type":  "string",
+                                                          "value":  "http://web:8080//api/shipping/cities/JP"
+                                                      },
+                                                      {
+                                                          "key":  "internal.span.format",
+                                                          "type":  "string",
+                                                          "value":  "zipkin"
+                                                      },
+                                                      {
+                                                          "key":  "istio.canonical_revision",
+                                                          "type":  "string",
+                                                          "value":  "latest"
+                                                      },
+                                                      {
+                                                          "key":  "istio.canonical_service",
+                                                          "type":  "string",
+                                                          "value":  "web"
+                                                      },
+                                                      {
+                                                          "key":  "istio.cluster_id",
+                                                          "type":  "string",
+                                                          "value":  "Kubernetes"
+                                                      },
+                                                      {
+                                                          "key":  "istio.mesh_id",
+                                                          "type":  "string",
+                                                          "value":  "cluster.local"
+                                                      },
+                                                      {
+                                                          "key":  "istio.namespace",
+                                                          "type":  "string",
+                                                          "value":  "robot-shop"
+                                                      },
+                                                      {
+                                                          "key":  "net.host.ip",
+                                                          "type":  "string",
+                                                          "value":  "10.244.0.64"
+                                                      },
+                                                      {
+                                                          "key":  "node_id",
+                                                          "type":  "string",
+                                                          "value":  "sidecar~10.244.0.64~web-59c994995f-kdq7z.robot-shop~robot-shop.svc.cluster.local"
+                                                      },
+                                                      {
+                                                          "key":  "peer.address",
+                                                          "type":  "string",
+                                                          "value":  "10.244.0.61"
+                                                      },
+                                                      {
+                                                          "key":  "request_size",
+                                                          "type":  "string",
+                                                          "value":  "0"
+                                                      },
+                                                      {
+                                                          "key":  "response_flags",
+                                                          "type":  "string",
+                                                          "value":  "-"
+                                                      },
+                                                      {
+                                                          "key":  "response_size",
+                                                          "type":  "string",
+                                                          "value":  "111"
+                                                      },
+                                                      {
+                                                          "key":  "span.kind",
+                                                          "type":  "string",
+                                                          "value":  "server"
+                                                      },
+                                                      {
+                                                          "key":  "upstream_cluster",
+                                                          "type":  "string",
+                                                          "value":  "inbound|8080||"
+                                                      },
+                                                      {
+                                                          "key":  "upstream_cluster.name",
+                                                          "type":  "string",
+                                                          "value":  "inbound|8080||;"
+                                                      },
+                                                      {
+                                                          "key":  "user_agent",
+                                                          "type":  "string",
+                                                          "value":  "python-requests/2.26.0"
+                                                      }
+                                                  ],
+                                         "logs":  [
+                                                      {
+                                                          "timestamp":  1793057256318592,
+                                                          "fields":  [
+                                                                         {
+                                                                             "key":  "event",
+                                                                             "type":  "string",
+                                                                             "value":  "ss"
+                                                                         }
+                                                                     ]
+                                                      }
+                                                  ],
+                                         "processID":  "p1",
+                                         "warnings":  [
+                                                          "invalid parent span IDs=6b1c530e3bc3257f; skipping clock skew adjustment"
+                                                      ]
+                                     },
+                                     {
+                                         "traceID":  "1910ec97e9d8706f6b1c530e3bc3257f",
+                                         "spanID":  "710b23dd94f78217",
+                                         "operationName":  "shipping.robot-shop.svc.cluster.local:8080/*",
+                                         "references":  [
+                                                            {
+                                                                "refType":  "CHILD_OF",
+                                                                "traceID":  "1910ec97e9d8706f6b1c530e3bc3257f",
+                                                                "spanID":  "9e7dfb6f382140e6"
+                                                            }
+                                                        ],
+                                         "startTime":  1793057256312681,
+                                         "duration":  5158,
+                                         "tags":  [
+                                                      {
+                                                          "key":  "component",
+                                                          "type":  "string",
+                                                          "value":  "proxy"
+                                                      },
+                                                      {
+                                                          "key":  "downstream_cluster",
+                                                          "type":  "string",
+                                                          "value":  "-"
+                                                      },
+                                                      {
+                                                          "key":  "guid:x-request-id",
+                                                          "type":  "string",
+                                                          "value":  "978640d3-4677-9838-8189-63e27dd97168"
+                                                      },
+                                                      {
+                                                          "key":  "http.method",
+                                                          "type":  "string",
+                                                          "value":  "GET"
+                                                      },
+                                                      {
+                                                          "key":  "http.protocol",
+                                                          "type":  "string",
+                                                          "value":  "HTTP/1.1"
+                                                      },
+                                                      {
+                                                          "key":  "http.status_code",
+                                                          "type":  "string",
+                                                          "value":  "200"
+                                                      },
+                                                      {
+                                                          "key":  "http.url",
+                                                          "type":  "string",
+                                                          "value":  "http://shipping:8080/cities/JP"
+                                                      },
+                                                      {
+                                                          "key":  "internal.span.format",
+                                                          "type":  "string",
+                                                          "value":  "zipkin"
+                                                      },
+                                                      {
+                                                          "key":  "istio.canonical_revision",
+                                                          "type":  "string",
+                                                          "value":  "latest"
+                                                      },
+                                                      {
+                                                          "key":  "istio.canonical_service",
+                                                          "type":  "string",
+                                                          "value":  "web"
+                                                      },
+                                                      {
+                                                          "key":  "istio.cluster_id",
+                                                          "type":  "string",
+                                                          "value":  "Kubernetes"
+                                                      },
+                                                      {
+                                                          "key":  "istio.mesh_id",
+                                                          "type":  "string",
+                                                          "value":  "cluster.local"
+                                                      },
+                                                      {
+                                                          "key":  "istio.namespace",
+                                                          "type":  "string",
+                                                          "value":  "robot-shop"
+                                                      },
+                                                      {
+                                                          "key":  "net.host.ip",
+                                                          "type":  "string",
+                                                          "value":  "10.244.0.64"
+                                                      },
+                                                      {
+                                                          "key":  "node_id",
+                                                          "type":  "string",
+                                                          "value":  "sidecar~10.244.0.64~web-59c994995f-kdq7z.robot-shop~robot-shop.svc.cluster.local"
+                                                      },
+                                                      {
+                                                          "key":  "peer.address",
+                                                          "type":  "string",
+                                                          "value":  "10.244.0.64"
+                                                      },
+                                                      {
+                                                          "key":  "request_size",
+                                                          "type":  "string",
+                                                          "value":  "0"
+                                                      },
+                                                      {
+                                                          "key":  "response_flags",
+                                                          "type":  "string",
+                                                          "value":  "-"
+                                                      },
+                                                      {
+                                                          "key":  "response_size",
+                                                          "type":  "string",
+                                                          "value":  "111"
+                                                      },
+                                                      {
+                                                          "key":  "span.kind",
+                                                          "type":  "string",
+                                                          "value":  "client"
+                                                      },
+                                                      {
+                                                          "key":  "upstream_cluster",
+                                                          "type":  "string",
+                                                          "value":  "outbound|8080||shipping.robot-shop.svc.cluster.local"
+                                                      },
+                                                      {
+                                                          "key":  "upstream_cluster.name",
+                                                          "type":  "string",
+                                                          "value":  "outbound|8080||shipping.robot-shop.svc.cluster.local;"
+                                                      },
+                                                      {
+                                                          "key":  "user_agent",
+                                                          "type":  "string",
+                                                          "value":  "python-requests/2.26.0"
+                                                      }
+                                                  ],
+                                         "logs":  [
+                                                      {
+                                                          "timestamp":  1793057256317972,
+                                                          "fields":  [
+                                                                         {
+                                                                             "key":  "event",
+                                                                             "type":  "string",
+                                                                             "value":  "cr"
+                                                                         }
+                                                                     ]
+                                                      }
+                                                  ],
+                                         "processID":  "p1",
+                                         "warnings":  null
+                                     }
+                                 ],
+                       "processes":  {
+                                         "p1":  {
+                                                    "serviceName":  "web.robot-shop",
+                                                    "tags":  [
+
+                                                             ]
+                                                }
+                                     },
+                       "warnings":  null
+                   }
+               ]
+}
