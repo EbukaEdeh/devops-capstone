@@ -4,4 +4,4 @@ prometheus-client==0.21.1
 psycopg[binary,pool]==3.2.3
 opentelemetry-distro[otlp]==0.50b0
 opentelemetry-instrumentation-flask==0.50b0
-opentelemetry-instrumentation-psycopg==0.50b0
+opentelemetry-instrumentation-psycopg==0.66b1
