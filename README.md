@@ -21,7 +21,7 @@ this page is the entry point.
 | Capstone 2 - Keep it running | [`capstone2/`](capstone2/), [`capstone2/README.md`](capstone2/README.md), [`capstone2/docs/POSTMORTEM.md`](capstone2/docs/POSTMORTEM.md) | Robot Shop, metrics, logs, traces, SLO, alerts and incident drill |
 | Evidence | [`docs/EVIDENCE.md`](docs/EVIDENCE.md) | Screenshots, command output, alert JSON, logs and traces |
 | Grading checklist | [`docs/CAPSTONE_CHECKLIST.md`](docs/CAPSTONE_CHECKLIST.md) | Requirement-by-requirement status and known deviations |
-| Google Doc text | [`docs/GOOGLE_DOC_SUBMISSION.md`](docs/GOOGLE_DOC_SUBMISSION.md) | Paste-ready submission narrative with the same evidence links |
+| Submission text | [`docs/GOOGLE_DOC_SUBMISSION.md`](docs/GOOGLE_DOC_SUBMISSION.md) | Written summary with the same evidence links; submit the repository URL in the Google Form |
 
 Status at hand-in: both capstones build and run on kind; 19 tests pass; Helm
 deploy and rollback are demonstrated; Terraform validates; the GitHub Actions
@@ -260,9 +260,12 @@ Start with [`docs/EVIDENCE.md`](docs/EVIDENCE.md), then
 [`capstone2/README.md`](capstone2/README.md) and
 [`capstone2/docs/POSTMORTEM.md`](capstone2/docs/POSTMORTEM.md).
 
-For the paste-ready submission narrative, use
+For the written submission summary, use
 [`docs/GOOGLE_DOC_SUBMISSION.md`](docs/GOOGLE_DOC_SUBMISSION.md). It uses the
 public repository URL `https://github.com/EbukaEdeh/devops-capstone` throughout.
+The actual submission is the TS Academy Google Form: paste that repository URL
+into **Assignment Link**. The summary is supporting material; no separate Google
+Doc upload is required.
 
 The repository is public at
 [`EbukaEdeh/devops-capstone`](https://github.com/EbukaEdeh/devops-capstone),

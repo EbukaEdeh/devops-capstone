@@ -10,8 +10,9 @@
 | Demo environment | local kind cluster `voting-capstone` (single node) |
 
 > One repository contains both capstones. Capstone 1 is at the repository root;
-> Capstone 2 is in `capstone2/`. The public repository URL above is used throughout
-> this document.
+> Capstone 2 is in `capstone2/`. This document is the written summary; submission
+> is through the TS Academy Google Form, using the public repository URL above in
+> the **Assignment Link** field. No separate Google Doc upload is required.
 
 ## 1. Summary
 
@@ -344,5 +345,5 @@ completed requirement are all in the repository.
 - [x] Capstone 2 Robot Shop deployment on kind
 - [x] Capstone 2 metrics, dashboard, logs, traces, SLO, alerts, runbook and postmortem
 - [x] Local verification results recorded
-- [x] Public repository URL included in this document
-- [ ] Paste this text into the Google Doc and submit the link
+- [x] Public repository URL included in this document and ready for the Google Form
+- [ ] Submit the public repository URL through the TS Academy Google Form
