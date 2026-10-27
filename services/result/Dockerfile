@@ -1,4 +1,4 @@
-FROM python:3.12.16-slim-bookworm AS build
+FROM python:3.15.0-slim-bookworm AS build
 
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
     PIP_NO_CACHE_DIR=1
@@ -7,7 +7,7 @@ WORKDIR /build
 COPY services/result/requirements.txt ./
 RUN python -m venv /venv && /venv/bin/pip install --upgrade pip && /venv/bin/pip install -r requirements.txt
 
-FROM python:3.12.16-slim-bookworm
+FROM python:3.15.0-slim-bookworm
 
 ENV PATH="/venv/bin:$PATH" \
     PYTHONDONTWRITEBYTECODE=1 \
