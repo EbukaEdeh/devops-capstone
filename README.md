@@ -24,11 +24,12 @@ this page is the entry point.
 | Google Doc text | [`docs/GOOGLE_DOC_SUBMISSION.md`](docs/GOOGLE_DOC_SUBMISSION.md) | Paste-ready submission narrative with the same evidence links |
 
 Status at hand-in: both capstones build and run on kind; 19 tests pass; Helm
-deploy and rollback are demonstrated; Terraform validates; Robot Shop has a
-working dashboard, Loki logs, a Jaeger trace, a firing alert and a blameless
-postmortem. EKS apply, a live GitHub Actions run and Slack delivery are **not**
-claimed - they need AWS/GitHub/Slack credentials and are listed in
-[External gaps](#external-gaps).
+deploy and rollback are demonstrated; Terraform validates; the GitHub Actions
+pipeline ran successfully on `main` and pushed SHA-tagged images to GHCR; Robot
+Shop has a working dashboard, Loki logs, a Jaeger trace, a firing alert and a
+blameless postmortem. EKS apply and Slack delivery are **not** claimed - they
+need AWS/Slack credentials and are listed in [External gaps](#external-gaps).
+The CI deploy job is present but skips until AWS OIDC is configured.
 
 ## What is in the box
 
@@ -246,7 +247,11 @@ kubectl -n observability get prometheusrule robot-shop-slo
 ```
 
 The commands that were actually run are recorded in
-[`docs/evidence/local-ci-checks.txt`](docs/evidence/local-ci-checks.txt).
+[`docs/evidence/local-ci-checks.txt`](docs/evidence/local-ci-checks.txt). The
+same checks run on GitHub Actions; run
+[`40499887317`](https://github.com/EbukaEdeh/devops-capstone/actions/runs/40499887317)
+passed tests, lint, secret scan, image builds/scans and the GHCR push. EKS deploy
+is skipped until AWS OIDC is configured.
 
 ## Evidence and hand-in
 
@@ -259,8 +264,12 @@ For the paste-ready submission narrative, use
 [`docs/GOOGLE_DOC_SUBMISSION.md`](docs/GOOGLE_DOC_SUBMISSION.md). It uses the
 public repository URL `https://github.com/EbukaEdeh/devops-capstone` throughout.
 
-The local Git repository is committed on `main` and tagged `v1.0.0` (Capstone 1)
-and `v1.1.0` (Capstone 2).
+The repository is public at
+[`EbukaEdeh/devops-capstone`](https://github.com/EbukaEdeh/devops-capstone),
+committed on `main`, and tagged `v1.0.0` (Capstone 1) and `v1.1.0` (Capstone 2).
+The latest CI run is
+[`40499887317`](https://github.com/EbukaEdeh/devops-capstone/actions/runs/40499887317)
+and passed tests, lint, secret scan, image scans and the GHCR push.
 
 ## External gaps
 
@@ -269,13 +278,13 @@ instructor:
 
 - **Slack delivery:** no real incoming-webhook URL. The alert fires locally and
   the payload is captured; add `SLACK_WEBHOOK_URL` and verify one message.
-- **GitHub Actions run:** the workflow and actionlint pass, but there is no
-  GitHub remote/credentials. Push the repository and set the repository
-  variables/secrets before running it.
+- **GitHub Actions deploy to EKS:** the pipeline runs on GitHub, but the deploy
+  job requires `AWS_ROLE_ARN`, AWS OIDC and repository variables. It is skipped
+  by design until those exist.
 - **EKS apply/destroy:** Terraform validates, but applying it needs AWS
   credentials and a budget. kind is the local cluster substitute.
-- **GitHub fork:** the local repository exists; creating a fork requires the
-  user's GitHub account.
+- **GitHub fork:** the public repository is an implementation, not a fork of the
+  starter repositories. Creating a fork requires the user's GitHub account.
 - **Instructor-led incident:** the payment outage drill is the self-run
   substitute.
 

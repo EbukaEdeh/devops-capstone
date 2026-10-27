@@ -15,7 +15,7 @@
 | 1. Run locally | You can vote and see totals | Done | `scripts/run-local.ps1`; vote and result pages |
 | 2. Containerize safely | Images build, non-root, pinned, `.dockerignore` | Done | three Dockerfiles, `docker compose ps` healthy |
 | 3. Terraform cluster | Destroy and recreate EKS in the default VPC | Code done; apply blocked | `infra/terraform/*`, `terraform validate`; EKS needs AWS credentials and budget |
-| 4. GitHub Actions | Push runs tests, Trivy, build/push by SHA | Workflow done; run blocked | `.github/workflows/ci-cd.yml`, actionlint; needs a GitHub remote |
+| 4. GitHub Actions | Push runs tests, Trivy, build/push by SHA | Done; EKS deploy skipped | [run 40499887317](https://github.com/EbukaEdeh/devops-capstone/actions/runs/40499887317), [`ci-cd.yml`](../.github/workflows/ci-cd.yml); deploy job needs `AWS_ROLE_ARN`/OIDC |
 | 5. Helm deploy/rollback | One chart, bad release rolled back | Done | chart, `values-prod.yaml`, `scripts/demo-rollback.ps1`, `helm history` |
 
 ### Capstone 1 evidence
@@ -24,7 +24,7 @@
 - [x] `docker compose ps` showing healthy services: [capture](evidence/docker-compose-ps.txt).
 - [x] `kubectl get nodes` from the kind cluster: [capture](evidence/kind-nodes.txt).
 - [ ] `terraform output` from a real EKS apply. Not run: EKS costs money and needs AWS credentials; kind is the local substitute.
-- [ ] Successful GitHub Actions run with three SHA-tagged images. Workflow is committed and locally validated; the run needs a GitHub remote.
+- [x] Successful GitHub Actions run with three SHA-tagged images: [run 40499887317](https://github.com/EbukaEdeh/devops-capstone/actions/runs/40499887317), [record](evidence/github-actions-run.txt).
 - [x] `helm history voting-app` showing deploy and rollback revisions: [before](evidence/helm-history-before-rollback.txt), [after](evidence/helm-history-after-rollback.txt).
 - [x] `kubectl -n voting get pods` after rollback: [capture](evidence/kind-pods-after-rollback.txt), [rollback log](evidence/rollback-demo.log).
 
@@ -57,11 +57,11 @@
 
 ## Hand-in
 
-- [ ] Forked repository with a clear README. A local Git repository is initialized and committed; creating the fork needs the user's GitHub account.
+- [x] Public repository with a clear README: [EbukaEdeh/devops-capstone](https://github.com/EbukaEdeh/devops-capstone). It is an implementation repository, not a fork of the starter repositories.
 - [x] Terraform code and one Helm chart.
-- [ ] Working GitHub Actions pipeline. The workflow exists and passes the same checks locally; the Actions run needs a GitHub remote.
+- [x] Working GitHub Actions pipeline: [run 40499887317](https://github.com/EbukaEdeh/devops-capstone/actions/runs/40499887317) passed tests, lint, secret scan and all three image builds/scans.
 - [x] Architecture diagram: [`docs/ARCHITECTURE.md`](ARCHITECTURE.md) and [`capstone2/README.md`](../capstone2/README.md).
-- [ ] One push builds, scans and deploys. Not executed without a GitHub remote.
+- [ ] One push builds, scans and deploys to EKS. Builds, scans and pushes to GHCR succeed; the deploy job is skipped until `AWS_ROLE_ARN`/OIDC is configured.
 - [x] Environment rebuilds from code: local Compose and kind both built from the repository; EKS is not applied.
 - [x] No secrets in Git (`git grep` for passwords; `.env` ignored).
 - [x] Rollback shown live: [evidence](evidence/rollback-demo.log).
@@ -81,10 +81,10 @@
 
 | Gap | Why | What is already done |
 | --- | --- | --- |
-| Capstone 1 is a reimplementation, not a GitHub fork of `dockersamples/example-voting-app` | No GitHub account/remote was available | Same vote/result/worker/Redis/PostgreSQL architecture, Compose and Helm paths, tests and evidence |
-| Capstone 2 chart is vendored, not a GitHub fork of `instana/robot-shop` | No GitHub account/remote | Upstream chart copied, Instana removed, MariaDB workaround, kind values and load generator |
+| Capstone 1 is a reimplementation, not a GitHub fork of `dockersamples/example-voting-app` | The implementation was written and committed directly; the public repo is `EbukaEdeh/devops-capstone` | Same vote/result/worker/Redis/PostgreSQL architecture, Compose and Helm paths, tests and evidence |
+| Capstone 2 chart is vendored, not a GitHub fork of `instana/robot-shop` | The chart was copied and trimmed rather than forked | Upstream chart copied, Instana removed, MariaDB workaround, kind values and load generator |
 | No EKS apply/destroy | AWS credentials and budget are not available | Terraform validates; kind is the local cluster substitute |
-| No GitHub Actions run | No GitHub remote/credentials | Workflow committed and actionlint clean; local checks recorded |
+| No EKS deploy from GitHub Actions | No `AWS_ROLE_ARN`/OIDC role is configured | CI runs and pushes SHA-tagged images; deploy job is present and skipped conditionally |
 | No Slack delivery | No real webhook URL | Alert fires and payload is captured; Alertmanager route is documented |
 | Incident was self-run, not instructor-broken | Instructor-led break was not available | Same detect/mitigate/recover/postmortem path, with real timestamps |
 

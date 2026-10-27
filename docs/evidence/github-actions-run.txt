@@ -1,0 +1,36 @@
+GitHub Actions run
+==================
+
+Repository: https://github.com/EbukaEdeh/devops-capstone
+Workflow:   ci-cd
+Run:        40499887317
+Run URL:    https://github.com/EbukaEdeh/devops-capstone/actions/runs/40499887317
+Trigger:    push to main
+Commit:     bf7362c17e2ae84e75a2e6e5a39920cdda98bde5
+Started:    2026-10-27T11:56:22Z
+Finished:   2026-10-27T11:58:14Z
+Result:     success
+
+Jobs
+----
+Secret scan                  success
+Unit tests                   success
+Terraform and Helm lint      success
+Build and scan vote          success
+Build and scan result        success
+Build and scan worker        success
+Deploy to EKS                skipped  (no AWS_ROLE_ARN / OIDC role configured)
+Roll back release            skipped  (workflow_dispatch rollback only)
+
+Images published to GHCR
+------------------------
+ghcr.io/ebukaedeh/devops-capstone/vote:bf7362c17e2ae84e75a2e6e5a39920cdda98bde5
+  config digest: sha256:b06e4531aea16a218ce312a6e325e1636748e50b4e79ee2fdefd3b010e231199
+ghcr.io/ebukaedeh/devops-capstone/result:bf7362c17e2ae84e75a2e6e5a39920cdda98bde5
+  config digest: sha256:6cb65583b7dcb155b0cbdcb59b86584d78419ed0b64ee75f4844ebb29fdc1faa
+ghcr.io/ebukaedeh/devops-capstone/worker:bf7362c17e2ae84e75a2e6e5a39920cdda98bde5
+  config digest: sha256:1d9b803f9a0dcadd6b369a0077e06677eb316d3dce5e8439cc466d6a3d3bef41
+
+The images were pulled back with `docker manifest inspect`, confirming they are
+publicly readable. The EKS deploy job is skipped by design until AWS OIDC is
+configured; the pipeline is otherwise complete.

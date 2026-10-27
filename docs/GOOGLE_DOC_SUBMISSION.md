@@ -75,7 +75,7 @@ delivered more than once is still counted once.
 | Containerize the application | Done | `services/vote/Dockerfile`, `services/result/Dockerfile`, `services/worker/Dockerfile`, `compose.yaml` |
 | Run containers safely | Done | Non-root users, pinned base images, read-only containers, health checks, `.dockerignore` |
 | Terraform an EKS cluster in the default VPC | Code complete and validated; apply not run | `infra/terraform/`; `terraform fmt -check` and `terraform validate` pass |
-| GitHub Actions pipeline | Workflow complete and linted; live run not executed | `.github/workflows/ci-cd.yml`; `actionlint` reports no issues in `docs/evidence/local-ci-checks.txt` |
+| GitHub Actions pipeline | Run passed on GitHub; EKS deploy skipped | [Run 40499887317](https://github.com/EbukaEdeh/devops-capstone/actions/runs/40499887317): tests, lint, secret scan, all three image builds/scans and GHCR push passed; `docs/evidence/github-actions-run.txt` |
 | Helm deploy and rollback | Done | `docs/evidence/helm-history-before-rollback.txt`, `docs/evidence/helm-history-after-rollback.txt`, `docs/evidence/rollback-demo.log` |
 | Tests | Done | 19 pytest tests pass; see `docs/evidence/local-ci-checks.txt` |
 
@@ -281,6 +281,7 @@ The commands below were run locally and recorded in
 | `terraform fmt -check` and `terraform validate` | Clean and valid |
 | `docker compose config --quiet` | Exit 0 |
 | `actionlint` on `.github/workflows/ci-cd.yml` | No issues (actionlint 1.7.12) |
+| GitHub Actions run `40499887317` | Success: tests, lint, secret scan and vote/result/worker builds/scans; images pushed to GHCR; EKS deploy skipped |
 | Markdown relative-link check | 9 files checked, 0 broken |
 | Capstone 2 bring-up with `-SkipKindCreate` | All Helm releases upgraded; 13 Robot Shop pods and observability pods Ready |
 
@@ -295,11 +296,11 @@ These items are **not** claimed as complete:
    the Voting App were deployed and exercised on kind instead. The chart and
    values are portable to EKS; the cluster-specific values are in
    `deploy/helm/voting-app/values-prod.yaml`.
-2. **The GitHub Actions workflow has not run on GitHub.** The workflow is
-   committed and passes `actionlint`, but there is no GitHub remote or AWS OIDC
-   role in this environment. Pushing the repository and setting
-   `AWS_ROLE_ARN`, `AWS_REGION`, `EKS_CLUSTER_NAME`, `POSTGRES_PASSWORD` and the
-   optional `APP_URL` is the remaining step.
+2. **The GitHub Actions workflow runs, but the EKS deploy job is skipped.** Run
+   `40499887317` passed tests, lint, secret scan, all three image scans and the
+   GHCR push. The deploy job requires `AWS_ROLE_ARN`, AWS OIDC,
+   `AWS_REGION`, `EKS_CLUSTER_NAME`, `POSTGRES_PASSWORD` and the optional
+   `APP_URL`; those are not configured, so no EKS deployment is claimed.
 3. **Slack delivery was not executed.** No real incoming-webhook URL was
    available. The alert fires in Prometheus and the payload is captured; the
    Alertmanager route is in
@@ -308,8 +309,8 @@ These items are **not** claimed as complete:
 4. **The repository is an implementation, not a GitHub fork.** The Capstone 1
    app follows the `dockersamples/example-voting-app` architecture, and the
    Capstone 2 chart is vendored from `instana/robot-shop` with Instana removed.
-   Creating forks requires the GitHub account; the local repository is the
-   submission artifact.
+   The public repository is the submission artifact; it is not a fork of the
+   starter repositories.
 5. **The incident was self-run, not instructor-led.** The payment outage drill is
    the substitute for an instructor breaking the system. The timeline and
    postmortem are real captures from that drill.
@@ -320,8 +321,9 @@ completed requirement are all in the repository.
 
 ## 10. What I would do next
 
-- Push the repository to GitHub and run the pipeline against a kind or EKS
-  target, capturing the first green run.
+- Configure AWS OIDC (`AWS_ROLE_ARN`, `AWS_REGION`, `EKS_CLUSTER_NAME`,
+  `POSTGRES_PASSWORD`) so the existing deploy job can run the Helm release on
+  EKS instead of stopping after the image push.
 - Apply and destroy the Terraform stack in a budgeted AWS account, then repeat
   the same Helm deployment on EKS.
 - Add a real Slack webhook and capture the delivered alert.
@@ -338,7 +340,7 @@ completed requirement are all in the repository.
 - [x] Evidence index with screenshots, command output, logs, traces and alerts
 - [x] Capstone 1 app, Dockerfiles, Compose stack, Helm chart and rollback proof
 - [x] Capstone 1 Terraform for EKS and ECR (validated)
-- [x] Capstone 1 GitHub Actions workflow (committed and linted)
+- [x] Capstone 1 GitHub Actions run (tests, lint, secret scan, builds and GHCR push; EKS deploy skipped)
 - [x] Capstone 2 Robot Shop deployment on kind
 - [x] Capstone 2 metrics, dashboard, logs, traces, SLO, alerts, runbook and postmortem
 - [x] Local verification results recorded

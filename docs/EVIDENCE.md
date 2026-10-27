@@ -1,8 +1,9 @@
 # Evidence Index
 
-This page collects the proof captured during the capstone run. Everything here
-was produced locally on 2026-10-26 (UTC). Items that require an external account
-or paid cloud resource are listed separately at the end.
+This page collects the proof captured during the capstone run. The local
+artifacts were produced on 2026-10-26 (UTC); the GitHub Actions run was captured
+on 2026-10-27 (UTC). Items that still require an external account or paid cloud
+resource are listed separately at the end.
 
 ## Grader quick path
 
@@ -15,7 +16,7 @@ Capstone 2 under [`../capstone2`](../capstone2). The implementation is tagged
 | Capstone 1 works and accepts votes | [vote page](evidence/screenshots/vote-page.png), [result page](evidence/screenshots/result-page.png), [final health](evidence/final-health.txt) |
 | Containers are safe | `services/*/Dockerfile`, [`compose.yaml`](../compose.yaml), [`.dockerignore`](../.dockerignore) |
 | EKS infrastructure as code | [`infra/terraform/`](../infra/terraform/) - validates; apply needs AWS credentials |
-| CI/CD pipeline | [`.github/workflows/ci-cd.yml`](../.github/workflows/ci-cd.yml) - linted locally; a live run needs a GitHub remote |
+| CI/CD pipeline | [run 40499887317](https://github.com/EbukaEdeh/devops-capstone/actions/runs/40499887317), [run record](evidence/github-actions-run.txt) - tests, lint, secret scan, all three image scans and GHCR push passed; EKS deploy skipped without AWS OIDC |
 | Helm deploy and bad-release rollback | [rollback log](evidence/rollback-demo.log), [Helm history](evidence/helm-history-after-rollback.txt), [pods after rollback](evidence/kind-pods-after-rollback.txt) |
 | Robot Shop runs on Kubernetes | [UI](evidence/capstone2/robot-shop-ui.png), [healthy pods](evidence/capstone2/robot-shop-pods-healthy.txt), [Helm releases](evidence/capstone2/helm-releases.txt) |
 | Metrics and dashboard | [dashboard JSON](../capstone2/observability/dashboards/robot-shop.json), [live dashboard](evidence/capstone2/robot-shop-dashboard-recovered.png) |
@@ -42,6 +43,25 @@ repository URL `https://github.com/EbukaEdeh/devops-capstone` throughout.
 The kind UI screenshots are from the NodePorts mapped to `localhost:8080` and
 `localhost:8081`: [kind vote page](evidence/screenshots/kind-vote-page.png),
 [kind result page](evidence/screenshots/kind-result-page.png).
+
+## GitHub Actions run
+
+The pipeline ran on `main` at commit `bf7362c` and completed successfully:
+[run 40499887317](https://github.com/EbukaEdeh/devops-capstone/actions/runs/40499887317).
+The run record is [`github-actions-run.txt`](evidence/github-actions-run.txt).
+
+| Job | Result | What it proves |
+| --- | --- | --- |
+| Unit tests | Passed | The 19 pytest tests pass on a clean GitHub runner |
+| Terraform and Helm lint | Passed | `terraform fmt`/`validate`, `helm lint` and the production render pass |
+| Secret scan | Passed | Trivy found no committed secrets |
+| Build and scan vote/result/worker | Passed | All three images build, pass the Trivy image scan, and push to GHCR tagged with the commit SHA |
+| Deploy to EKS | Skipped | No `AWS_ROLE_ARN`/OIDC role is configured, so the deploy job correctly does not run |
+
+The three public images were pulled back with `docker manifest inspect`:
+`ghcr.io/ebukaedeh/devops-capstone/{vote,result,worker}:bf7362c...`. The EKS
+deploy job is deliberately conditional; the pipeline does not pretend to deploy
+without AWS credentials.
 
 ## Capstone 2 - Keep it running (Robot Shop on kind)
 
@@ -115,6 +135,12 @@ Grafana dashboard JSON          valid
 Every match is a variable reference or a documentation placeholder; no literal
 credential is tracked, and `.env` is ignored.
 
+The same checks also run on GitHub Actions. Run
+[`40499887317`](https://github.com/EbukaEdeh/devops-capstone/actions/runs/40499887317)
+passed tests, lint, secret scan, all three image builds/scans and the GHCR push;
+see [`github-actions-run.txt`](evidence/github-actions-run.txt). EKS deploy is
+skipped without AWS OIDC.
+
 The submission is committed on `main` and tagged `v1.0.0` (Capstone 1) and
 `v1.1.0` (Capstone 2); see [`git-commit.txt`](evidence/git-commit.txt).
 
@@ -147,9 +173,9 @@ observability pods were Ready afterwards. The command log is
 | Item | Why it is not captured here |
 | --- | --- |
 | Slack message from Alertmanager | No real Slack incoming-webhook URL was provided. The firing alert and its payload are captured; delivery needs `SLACK_WEBHOOK_URL` |
-| GitHub Actions run with SHA-tagged images | The workflow is committed and locally validated, but pushing and running it needs a GitHub repository and credentials |
+| EKS deploy from GitHub Actions | The pipeline and image push pass, but the deploy job needs `AWS_ROLE_ARN`, AWS OIDC and repository variables; it is skipped until those exist |
 | EKS `terraform apply` / `terraform destroy` | EKS costs money and needs AWS credentials. The same chart was deployed and rolled back on kind as the local substitute |
-| Forked repository URL | A local Git repository is initialized; creating the fork requires the user's GitHub account |
+| Forked repository URL | A public implementation repository exists at `https://github.com/EbukaEdeh/devops-capstone`; it is not a fork of the starter repositories |
 | Instructor-led incident | The instructor-led break was not available; the payment outage drill is the self-run substitute |
 
 ## Notes
