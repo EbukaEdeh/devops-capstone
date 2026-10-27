@@ -10,6 +10,26 @@ A complete, runnable implementation of the two beginner DevOps capstones:
 The applications are intentionally small. The engineering around them is the
 point.
 
+## Submission
+
+One repository contains both capstones. The implementation is tagged `v1.1.0`;
+this page is the entry point.
+
+| Part | Where to look | What is there |
+| --- | --- | --- |
+| Capstone 1 - Ship it | [`services/`](services/), [`deploy/helm/voting-app/`](deploy/helm/voting-app/), [`infra/terraform/`](infra/terraform/), [`docs/DEMO.md`](docs/DEMO.md) | Voting App, Helm chart, EKS Terraform, CI/CD and rollback demo |
+| Capstone 2 - Keep it running | [`capstone2/`](capstone2/), [`capstone2/README.md`](capstone2/README.md), [`capstone2/docs/POSTMORTEM.md`](capstone2/docs/POSTMORTEM.md) | Robot Shop, metrics, logs, traces, SLO, alerts and incident drill |
+| Evidence | [`docs/EVIDENCE.md`](docs/EVIDENCE.md) | Screenshots, command output, alert JSON, logs and traces |
+| Grading checklist | [`docs/CAPSTONE_CHECKLIST.md`](docs/CAPSTONE_CHECKLIST.md) | Requirement-by-requirement status and known deviations |
+| Google Doc text | [`docs/GOOGLE_DOC_SUBMISSION.md`](docs/GOOGLE_DOC_SUBMISSION.md) | Paste-ready submission narrative with the same evidence links |
+
+Status at hand-in: both capstones build and run on kind; 19 tests pass; Helm
+deploy and rollback are demonstrated; Terraform validates; Robot Shop has a
+working dashboard, Loki logs, a Jaeger trace, a firing alert and a blameless
+postmortem. EKS apply, a live GitHub Actions run and Slack delivery are **not**
+claimed - they need AWS/GitHub/Slack credentials and are listed in
+[External gaps](#external-gaps).
+
 ## What is in the box
 
 | Area | Implementation |
@@ -235,7 +255,12 @@ Start with [`docs/EVIDENCE.md`](docs/EVIDENCE.md), then
 [`capstone2/README.md`](capstone2/README.md) and
 [`capstone2/docs/POSTMORTEM.md`](capstone2/docs/POSTMORTEM.md).
 
-The local Git repository is committed on `main` and tagged `v1.0.0`.
+For the paste-ready submission narrative, use
+[`docs/GOOGLE_DOC_SUBMISSION.md`](docs/GOOGLE_DOC_SUBMISSION.md). It contains
+one placeholder, `REPLACE_REPO_URL`, for the public repository URL.
+
+The local Git repository is committed on `main` and tagged `v1.0.0` (Capstone 1)
+and `v1.1.0` (Capstone 2).
 
 ## External gaps
 

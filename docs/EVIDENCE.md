@@ -4,6 +4,31 @@ This page collects the proof captured during the capstone run. Everything here
 was produced locally on 2026-10-26 (UTC). Items that require an external account
 or paid cloud resource are listed separately at the end.
 
+## Grader quick path
+
+Both capstones are in this one repository: Capstone 1 at the repository root,
+Capstone 2 under [`../capstone2`](../capstone2). The implementation is tagged
+`v1.1.0`. Start with the row that matches the requirement.
+
+| What to check | Open this |
+| --- | --- |
+| Capstone 1 works and accepts votes | [vote page](evidence/screenshots/vote-page.png), [result page](evidence/screenshots/result-page.png), [final health](evidence/final-health.txt) |
+| Containers are safe | `services/*/Dockerfile`, [`compose.yaml`](../compose.yaml), [`.dockerignore`](../.dockerignore) |
+| EKS infrastructure as code | [`infra/terraform/`](../infra/terraform/) - validates; apply needs AWS credentials |
+| CI/CD pipeline | [`.github/workflows/ci-cd.yml`](../.github/workflows/ci-cd.yml) - linted locally; a live run needs a GitHub remote |
+| Helm deploy and bad-release rollback | [rollback log](evidence/rollback-demo.log), [Helm history](evidence/helm-history-after-rollback.txt), [pods after rollback](evidence/kind-pods-after-rollback.txt) |
+| Robot Shop runs on Kubernetes | [UI](evidence/capstone2/robot-shop-ui.png), [healthy pods](evidence/capstone2/robot-shop-pods-healthy.txt), [Helm releases](evidence/capstone2/helm-releases.txt) |
+| Metrics and dashboard | [dashboard JSON](../capstone2/observability/dashboards/robot-shop.json), [live dashboard](evidence/capstone2/robot-shop-dashboard-recovered.png) |
+| Logs by service and level | [Loki payment error](evidence/capstone2/loki-payment-error.json) |
+| Distributed trace | [Jaeger trace](evidence/capstone2/jaeger-web-trace.png), [trace JSON](evidence/capstone2/jaeger-web-trace.json) |
+| Firing alert and incident drill | [alert JSON](evidence/capstone2/robot-shop-alert-firing.json), [drill timestamps](evidence/capstone2/drill-timestamps.txt), [postmortem](../capstone2/docs/POSTMORTEM.md) |
+| SLO and error budget | [`SLO.md`](../capstone2/docs/SLO.md), [`ERROR_BUDGET_POLICY.md`](../capstone2/docs/ERROR_BUDGET_POLICY.md) |
+| Known gaps | [Still requires an external account or paid resource](#still-requires-an-external-account-or-paid-resource) |
+
+For the same material as a single submission narrative, use
+[`GOOGLE_DOC_SUBMISSION.md`](GOOGLE_DOC_SUBMISSION.md). It has one
+`REPLACE_REPO_URL` placeholder for the public repository URL.
+
 ## Capstone 1 - Ship it
 
 | Requirement | Evidence | What it proves |
