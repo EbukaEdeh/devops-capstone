@@ -76,7 +76,7 @@ jobs:
           terraform -chdir=infra/terraform init -backend=false -input=false
           terraform -chdir=infra/terraform validate
 
-      - uses: azure/setup-helm@v4
+      - uses: azure/setup-helm@v5
         with:
           version: v3.16.4
 
@@ -197,7 +197,7 @@ jobs:
             --name "${{ vars.EKS_CLUSTER_NAME }}" \
             --region "${{ vars.AWS_REGION }}"
 
-      - uses: azure/setup-helm@v4
+      - uses: azure/setup-helm@v5
         with:
           version: v3.16.4
 
@@ -270,7 +270,7 @@ jobs:
             --name "${{ vars.EKS_CLUSTER_NAME }}" \
             --region "${{ vars.AWS_REGION }}"
 
-      - uses: azure/setup-helm@v4
+      - uses: azure/setup-helm@v5
         with:
           version: v3.16.4
 
