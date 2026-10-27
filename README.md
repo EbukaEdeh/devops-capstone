@@ -256,8 +256,8 @@ Start with [`docs/EVIDENCE.md`](docs/EVIDENCE.md), then
 [`capstone2/docs/POSTMORTEM.md`](capstone2/docs/POSTMORTEM.md).
 
 For the paste-ready submission narrative, use
-[`docs/GOOGLE_DOC_SUBMISSION.md`](docs/GOOGLE_DOC_SUBMISSION.md). It contains
-one placeholder, `REPLACE_REPO_URL`, for the public repository URL.
+[`docs/GOOGLE_DOC_SUBMISSION.md`](docs/GOOGLE_DOC_SUBMISSION.md). It uses the
+public repository URL `https://github.com/EbukaEdeh/devops-capstone` throughout.
 
 The local Git repository is committed on `main` and tagged `v1.0.0` (Capstone 1)
 and `v1.1.0` (Capstone 2).

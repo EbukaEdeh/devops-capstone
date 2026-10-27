@@ -74,8 +74,8 @@
 - [x] Demo and Q&A prepared.
 - [x] Evidence index: [docs/EVIDENCE.md](EVIDENCE.md).
 - [x] Submission text prepared:
-  [docs/GOOGLE_DOC_SUBMISSION.md](GOOGLE_DOC_SUBMISSION.md) (replace
-  `REPLACE_REPO_URL` before pasting).
+  [docs/GOOGLE_DOC_SUBMISSION.md](GOOGLE_DOC_SUBMISSION.md) with the public
+  repository URL included.
 
 ## Known deviations and gaps
 

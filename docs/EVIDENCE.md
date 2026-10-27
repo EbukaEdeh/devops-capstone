@@ -26,8 +26,8 @@ Capstone 2 under [`../capstone2`](../capstone2). The implementation is tagged
 | Known gaps | [Still requires an external account or paid resource](#still-requires-an-external-account-or-paid-resource) |
 
 For the same material as a single submission narrative, use
-[`GOOGLE_DOC_SUBMISSION.md`](GOOGLE_DOC_SUBMISSION.md). It has one
-`REPLACE_REPO_URL` placeholder for the public repository URL.
+[`GOOGLE_DOC_SUBMISSION.md`](GOOGLE_DOC_SUBMISSION.md). It uses the public
+repository URL `https://github.com/EbukaEdeh/devops-capstone` throughout.
 
 ## Capstone 1 - Ship it
 

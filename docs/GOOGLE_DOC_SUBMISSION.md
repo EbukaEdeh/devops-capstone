@@ -5,13 +5,13 @@
 | Name | Ebuka Edeh |
 | Cohort | TS Academy DevOps (Hajime 2026) |
 | Submission date | October 2026 |
-| Repository | REPLACE_REPO_URL |
+| Repository | https://github.com/EbukaEdeh/devops-capstone |
 | Implementation tag | `v1.1.0` |
 | Demo environment | local kind cluster `voting-capstone` (single node) |
 
 > One repository contains both capstones. Capstone 1 is at the repository root;
-> Capstone 2 is in `capstone2/`. Replace `REPLACE_REPO_URL` in this file with the
-> public repository URL **before pasting** so every hyperlink target is correct.
+> Capstone 2 is in `capstone2/`. The public repository URL above is used throughout
+> this document.
 
 ## 1. Summary
 
@@ -32,7 +32,7 @@ SLOs and incident response - is the deliverable.
 
 The implementation is committed on `main` and tagged `v1.1.0`. The evidence was
 captured locally on 26 October 2026 (UTC) and is indexed in
-[`docs/EVIDENCE.md`](REPLACE_REPO_URL/blob/main/docs/EVIDENCE.md).
+[`docs/EVIDENCE.md`](https://github.com/EbukaEdeh/devops-capstone/blob/main/docs/EVIDENCE.md).
 
 ## 2. Repository map
 
@@ -49,12 +49,12 @@ captured locally on 26 October 2026 (UTC) and is indexed in
 
 Useful links:
 
-- Repository: REPLACE_REPO_URL
-- Root README: REPLACE_REPO_URL/blob/main/README.md
-- Evidence index: REPLACE_REPO_URL/blob/main/docs/EVIDENCE.md
-- Grading checklist: REPLACE_REPO_URL/blob/main/docs/CAPSTONE_CHECKLIST.md
-- Capstone 2 guide: REPLACE_REPO_URL/tree/main/capstone2
-- Incident postmortem: REPLACE_REPO_URL/blob/main/capstone2/docs/POSTMORTEM.md
+- Repository: https://github.com/EbukaEdeh/devops-capstone
+- Root README: https://github.com/EbukaEdeh/devops-capstone/blob/main/README.md
+- Evidence index: https://github.com/EbukaEdeh/devops-capstone/blob/main/docs/EVIDENCE.md
+- Grading checklist: https://github.com/EbukaEdeh/devops-capstone/blob/main/docs/CAPSTONE_CHECKLIST.md
+- Capstone 2 guide: https://github.com/EbukaEdeh/devops-capstone/tree/main/capstone2
+- Incident postmortem: https://github.com/EbukaEdeh/devops-capstone/blob/main/capstone2/docs/POSTMORTEM.md
 
 ## 3. Capstone 1 - Ship it
 
@@ -342,5 +342,5 @@ completed requirement are all in the repository.
 - [x] Capstone 2 Robot Shop deployment on kind
 - [x] Capstone 2 metrics, dashboard, logs, traces, SLO, alerts, runbook and postmortem
 - [x] Local verification results recorded
-- [ ] Replace `REPLACE_REPO_URL` with the public repository URL
+- [x] Public repository URL included in this document
 - [ ] Paste this text into the Google Doc and submit the link
