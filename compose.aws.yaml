@@ -1,0 +1,14 @@
+# Public demo override: use the images already built by GitHub Actions instead
+# of rebuilding on the EC2 host.
+#
+# Usage on the instance:
+#   docker compose -f compose.yaml -f compose.aws.yaml up -d
+services:
+  vote:
+    image: ghcr.io/ebukaedeh/devops-capstone/vote:bf7362c17e2ae84e75a2e6e5a39920cdda98bde5
+
+  result:
+    image: ghcr.io/ebukaedeh/devops-capstone/result:bf7362c17e2ae84e75a2e6e5a39920cdda98bde5
+
+  worker:
+    image: ghcr.io/ebukaedeh/devops-capstone/worker:bf7362c17e2ae84e75a2e6e5a39920cdda98bde5
