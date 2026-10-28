@@ -13,7 +13,7 @@ groups:
         annotations:
           summary: "A queued vote is older than the 60s freshness target"
           description: "The oldest vote in Redis has been waiting more than 60 seconds. Check the worker and PostgreSQL."
-          runbook_url: "https://github.com/your-org/voting-app/blob/main/docs/RUNBOOK.md#queue-backlog"
+          runbook_url: "https://github.com/EbukaEdeh/devops-capstone/blob/main/docs/RUNBOOK.md#queue-backlog"
 
       - alert: VotingQueueBacklog
         expr: max(vote_queue_depth{service="vote"}) > 50
@@ -24,7 +24,7 @@ groups:
         annotations:
           summary: "Votes are queueing in Redis"
           description: "More than 50 votes have been waiting for 5 minutes. Check the worker."
-          runbook_url: "https://github.com/your-org/voting-app/blob/main/docs/RUNBOOK.md#queue-backlog"
+          runbook_url: "https://github.com/EbukaEdeh/devops-capstone/blob/main/docs/RUNBOOK.md#queue-backlog"
 
       - alert: VotingAppHighErrorRate
         expr: |
@@ -39,7 +39,7 @@ groups:
         annotations:
           summary: "Voting App 5xx rate is above 5%"
           description: "The user-facing error rate has exceeded the fast-burn threshold."
-          runbook_url: "https://github.com/your-org/voting-app/blob/main/docs/RUNBOOK.md#high-error-rate"
+          runbook_url: "https://github.com/EbukaEdeh/devops-capstone/blob/main/docs/RUNBOOK.md#high-error-rate"
 
       - alert: VotingAppHighLatency
         expr: |
@@ -54,4 +54,4 @@ groups:
         annotations:
           summary: "Voting App p95 latency is above 500 ms"
           description: "The p95 latency SLO is burning. Check database and Redis latency."
-          runbook_url: "https://github.com/your-org/voting-app/blob/main/docs/RUNBOOK.md#high-latency"
+          runbook_url: "https://github.com/EbukaEdeh/devops-capstone/blob/main/docs/RUNBOOK.md#high-latency"

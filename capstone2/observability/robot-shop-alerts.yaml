@@ -34,8 +34,8 @@ spec:
             slo: availability
           annotations:
             summary: "Robot Shop 5xx error rate is above 5%"
-            description: "The 5xx ratio for web/catalogue/cart/payment is {{ $value | humanize }}% over the last 5 minutes (SLO threshold: 5%)."
-            runbook_url: "https://github.com/your-org/capstone-project/blob/main/capstone2/docs/RUNBOOK.md"
+            description: "The 5xx ratio for web/catalogue/cart/payment is {{ $value | humanize }}% over the last 5 minutes. Fires at 5%; the SLO tolerates 0.5% errors (99.5% availability)."
+            runbook_url: "https://github.com/EbukaEdeh/devops-capstone/blob/main/capstone2/docs/RUNBOOK.md"
             dashboard_url: "http://localhost:3000/d/robot-shop-slo"
 
         - alert: RobotShopHighLatency
@@ -55,7 +55,7 @@ spec:
           annotations:
             summary: "Robot Shop p95 latency is above 500 ms"
             description: "Aggregate p95 latency for web/catalogue/cart/payment is {{ $value | humanize }} ms over the last 5 minutes (SLO threshold: 500 ms)."
-            runbook_url: "https://github.com/your-org/capstone-project/blob/main/capstone2/docs/RUNBOOK.md"
+            runbook_url: "https://github.com/EbukaEdeh/devops-capstone/blob/main/capstone2/docs/RUNBOOK.md"
             dashboard_url: "http://localhost:3000/d/robot-shop-slo"
 
         - alert: RobotShopServiceDown
@@ -72,7 +72,7 @@ spec:
           annotations:
             summary: "Robot Shop deployment {{ $labels.deployment }} has no ready replicas"
             description: "Deployment {{ $labels.deployment }} has had zero ready replicas for 2 minutes. The service is unavailable."
-            runbook_url: "https://github.com/your-org/capstone-project/blob/main/capstone2/docs/RUNBOOK.md"
+            runbook_url: "https://github.com/EbukaEdeh/devops-capstone/blob/main/capstone2/docs/RUNBOOK.md"
             dashboard_url: "http://localhost:3000/d/robot-shop-slo"
 
         - alert: RobotShopPodRestarting
@@ -85,5 +85,5 @@ spec:
           annotations:
             summary: "Robot Shop pod {{ $labels.pod }} is restarting"
             description: "Container {{ $labels.container }} in pod {{ $labels.pod }} restarted {{ $value | humanize }} time(s) in the last 15 minutes."
-            runbook_url: "https://github.com/your-org/capstone-project/blob/main/capstone2/docs/RUNBOOK.md"
+            runbook_url: "https://github.com/EbukaEdeh/devops-capstone/blob/main/capstone2/docs/RUNBOOK.md"
             dashboard_url: "http://localhost:3000/d/robot-shop-slo"

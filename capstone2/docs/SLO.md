@@ -46,7 +46,7 @@ is attempted.
 
 ## Alerting
 
-Fast-burn alerts implemented in `capstone2/observability/robot-shop-alerts.yaml`:
+Alert rules implemented in `capstone2/observability/robot-shop-alerts.yaml`:
 
 | Alert | Condition | For | Severity |
 | --- | --- | --- | --- |
@@ -55,9 +55,11 @@ Fast-burn alerts implemented in `capstone2/observability/robot-shop-alerts.yaml`
 | `RobotShopServiceDown` | a graded deployment has 0 ready replicas | 2m | critical |
 | `RobotShopPodRestarting` | a container restarted in the last 15m | 5m | warning |
 
-The 5% fast-burn threshold is deliberately tighter than the 0.5% SLO so the team
-is paged before a full month's budget is consumed in a short incident. A longer
-window burn-rate alert can be added once the team has a month of baseline data.
+The 5% error-ratio threshold is a coarse guard, not a burn-rate calculation: it
+fires when the error ratio is ten times the 0.5% the SLO tolerates, so it catches
+a grossly broken service rather than early budget burn. A multi-window burn-rate
+alert (for example 2% of budget in one hour, 5% in six hours) is the next step
+once there is a month of baseline data.
 
 ## Exclusions and known risks
 

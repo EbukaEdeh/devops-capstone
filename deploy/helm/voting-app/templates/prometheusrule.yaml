@@ -24,7 +24,7 @@ spec:
           annotations:
             summary: "Voting App pod {{"{{"}} $labels.pod {{"}}"}} is down"
             description: "Prometheus has not been able to scrape this pod for 5 minutes."
-            runbook_url: "https://github.com/your-org/voting-app/blob/main/docs/RUNBOOK.md#pod-down"
+            runbook_url: "https://github.com/EbukaEdeh/devops-capstone/blob/main/docs/RUNBOOK.md#pod-down"
 
         - alert: VotingAppHighErrorRate
           expr: |
@@ -39,7 +39,7 @@ spec:
           annotations:
             summary: "Voting App 5xx rate is above 5%"
             description: "The user-facing error rate has exceeded the 5% fast-burn threshold."
-            runbook_url: "https://github.com/your-org/voting-app/blob/main/docs/RUNBOOK.md#high-error-rate"
+            runbook_url: "https://github.com/EbukaEdeh/devops-capstone/blob/main/docs/RUNBOOK.md#high-error-rate"
 
         - alert: VotingAppHighLatency
           expr: |
@@ -54,7 +54,7 @@ spec:
           annotations:
             summary: "Voting App p95 latency is above 500 ms"
             description: "The p95 latency SLO is burning. Check database and Redis latency."
-            runbook_url: "https://github.com/your-org/voting-app/blob/main/docs/RUNBOOK.md#high-latency"
+            runbook_url: "https://github.com/EbukaEdeh/devops-capstone/blob/main/docs/RUNBOOK.md#high-latency"
 
         - alert: VotingQueueBacklog
           expr: max(vote_queue_depth{namespace="{{ .Release.Namespace }}"}) > 50
@@ -65,7 +65,7 @@ spec:
           annotations:
             summary: "Votes are queueing in Redis"
             description: "More than 50 votes have been waiting for 5 minutes. Check the worker."
-            runbook_url: "https://github.com/your-org/voting-app/blob/main/docs/RUNBOOK.md#queue-backlog"
+            runbook_url: "https://github.com/EbukaEdeh/devops-capstone/blob/main/docs/RUNBOOK.md#queue-backlog"
 
         - alert: VotingFreshnessAtRisk
           expr: max(vote_queue_oldest_age_seconds{namespace="{{ .Release.Namespace }}"}) > 60
@@ -75,7 +75,7 @@ spec:
           annotations:
             summary: "A queued vote is older than the 60s freshness target"
             description: "The oldest vote in Redis has been waiting more than 60 seconds. The freshness SLO (99% of votes within 60s) is burning; check the worker and PostgreSQL before the queue backs up further."
-            runbook_url: "https://github.com/your-org/voting-app/blob/main/docs/RUNBOOK.md#queue-backlog"
+            runbook_url: "https://github.com/EbukaEdeh/devops-capstone/blob/main/docs/RUNBOOK.md#queue-backlog"
 
         - alert: VotingWorkerStalled
           expr: |
@@ -89,5 +89,5 @@ spec:
           annotations:
             summary: "The vote worker is not draining the queue"
             description: "Votes are waiting but no worker has written to PostgreSQL for 10 minutes."
-            runbook_url: "https://github.com/your-org/voting-app/blob/main/docs/RUNBOOK.md#worker-stalled"
+            runbook_url: "https://github.com/EbukaEdeh/devops-capstone/blob/main/docs/RUNBOOK.md#worker-stalled"
 {{- end }}
