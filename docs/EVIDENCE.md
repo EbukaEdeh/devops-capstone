@@ -2,8 +2,9 @@
 
 This page collects the proof captured during the capstone run. The local
 artifacts were produced on 2026-10-26 (UTC); the GitHub Actions run was captured
-on 2026-10-27 (UTC). Items that still require an external account or paid cloud
-resource are listed separately at the end.
+on 2026-10-27 (UTC), and the public AWS demo on 2026-10-28 (UTC). Items that
+still require an external account or paid cloud resource are listed separately
+at the end.
 
 ## Grader quick path
 
@@ -14,6 +15,7 @@ Capstone 2 under [`../capstone2`](../capstone2). The implementation is tagged
 | What to check | Open this |
 | --- | --- |
 | Capstone 1 works and accepts votes | [vote page](evidence/screenshots/vote-page.png), [result page](evidence/screenshots/result-page.png), [final health](evidence/final-health.txt) |
+| Live public demo | [vote app](http://13.62.69.172:8080/), [result board](http://13.62.69.172:8081/), [deployment record](evidence/aws-live-demo.txt) - EC2, Elastic IP, GHCR images |
 | Containers are safe | `services/*/Dockerfile`, [`compose.yaml`](../compose.yaml), [`.dockerignore`](../.dockerignore) |
 | EKS infrastructure as code | [`infra/terraform/`](../infra/terraform/) - validates; apply needs AWS credentials |
 | CI/CD pipeline | [run 40499887317](https://github.com/EbukaEdeh/devops-capstone/actions/runs/40499887317), [run record](evidence/github-actions-run.txt) - tests, lint, secret scan, all three image scans and GHCR push passed; EKS deploy skipped without AWS OIDC |
@@ -62,6 +64,21 @@ The three public images were pulled back with `docker manifest inspect`:
 `ghcr.io/ebukaedeh/devops-capstone/{vote,result,worker}:bf7362c...`. The EKS
 deploy job is deliberately conditional; the pipeline does not pretend to deploy
 without AWS credentials.
+
+## Live AWS demo
+
+Capstone 1 is running publicly on one EC2 instance in `eu-north-1`:
+
+- Vote: <http://13.62.69.172:8080/>
+- Result: <http://13.62.69.172:8081/>
+
+The instance uses the public GHCR images through [`compose.aws.yaml`](../compose.aws.yaml),
+has an Elastic IP, and runs `restart: unless-stopped` containers. A vote POST
+returned `303` and the result API then reported `total=2, cats=1, dogs=1`. The
+command output and instance details are in
+[`aws-live-demo.txt`](evidence/aws-live-demo.txt). This is a demo host for
+Capstone 1, not a replacement for the EKS Terraform; Capstone 2 remains on the
+local kind cluster.
 
 ## Capstone 2 - Keep it running (Robot Shop on kind)
 
@@ -174,7 +191,7 @@ observability pods were Ready afterwards. The command log is
 | --- | --- |
 | Slack message from Alertmanager | No real Slack incoming-webhook URL was provided. The firing alert and its payload are captured; delivery needs `SLACK_WEBHOOK_URL` |
 | EKS deploy from GitHub Actions | The pipeline and image push pass, but the deploy job needs `AWS_ROLE_ARN`, AWS OIDC and repository variables; it is skipped until those exist |
-| EKS `terraform apply` / `terraform destroy` | EKS costs money and needs AWS credentials. The same chart was deployed and rolled back on kind as the local substitute |
+| EKS `terraform apply` / `terraform destroy` | EKS costs money. The Terraform remains validated but not applied; the public demo runs on EC2, and the same chart was deployed and rolled back on kind as the Kubernetes substitute |
 | Forked repository URL | A public implementation repository exists at `https://github.com/EbukaEdeh/devops-capstone`; it is not a fork of the starter repositories |
 | Instructor-led incident | The instructor-led break was not available; the payment outage drill is the self-run substitute |
 

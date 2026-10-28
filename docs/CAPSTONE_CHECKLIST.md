@@ -4,7 +4,7 @@
 
 | Weight | Criterion | Evidence in this repository |
 | --- | --- | --- |
-| 50% | Working system | Voting App (Compose + kind) and Robot Shop (kind) are running; 19 tests; live UIs |
+| 50% | Working system | Voting App (Compose + kind + public EC2) and Robot Shop (kind) are running; 19 tests; live UIs |
 | 30% | Automation and docs | Terraform, Helm, GitHub Actions, README, architecture, SLO, runbook, postmortem, evidence index |
 | 20% | Demo and Q&A | `docs/DEMO.md`, rollback script, payment outage drill, Prometheus/Grafana/Jaeger/Loki evidence |
 
@@ -21,6 +21,7 @@
 ### Capstone 1 evidence
 
 - [x] Vote page and result page with non-zero totals: [vote](evidence/screenshots/vote-page.png), [result](evidence/screenshots/result-page.png), [kind vote](evidence/screenshots/kind-vote-page.png), [kind result](evidence/screenshots/kind-result-page.png).
+- [x] Public AWS demo with stable Elastic IP: [vote](http://13.62.69.172:8080/), [result](http://13.62.69.172:8081/), [deployment record](evidence/aws-live-demo.txt).
 - [x] `docker compose ps` showing healthy services: [capture](evidence/docker-compose-ps.txt).
 - [x] `kubectl get nodes` from the kind cluster: [capture](evidence/kind-nodes.txt).
 - [ ] `terraform output` from a real EKS apply. Not run: EKS costs money and needs AWS credentials; kind is the local substitute.

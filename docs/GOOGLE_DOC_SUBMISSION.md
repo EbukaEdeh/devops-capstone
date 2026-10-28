@@ -8,6 +8,7 @@
 | Repository | https://github.com/EbukaEdeh/devops-capstone |
 | Implementation tag | `v1.1.0` |
 | Demo environment | local kind cluster `voting-capstone` (single node) |
+| Live public demo | [vote](http://13.62.69.172:8080/) and [result](http://13.62.69.172:8081/) on AWS EC2 (`eu-north-1`) |
 
 > One repository contains both capstones. Capstone 1 is at the repository root;
 > Capstone 2 is in `capstone2/`. This document is the written summary; submission
@@ -16,7 +17,7 @@
 
 ## 1. Summary
 
-I built and ran both capstone projects end to end:
+I built both capstone projects and ran them end to end on a local kind cluster:
 
 - **Capstone 1 - Ship it:** a containerized Voting App (Flask vote, Flask result,
   Python worker, Redis and PostgreSQL), a Helm chart with probes and security
@@ -31,9 +32,20 @@ The applications are intentionally small. The engineering around them -
 containers, infrastructure as code, CI/CD, release management, observability,
 SLOs and incident response - is the deliverable.
 
-The implementation is committed on `main` and tagged `v1.1.0`. The evidence was
-captured locally on 26 October 2026 (UTC) and is indexed in
+The implementation is committed on `main` and tagged `v1.1.0`. The local
+evidence was captured on 26 October 2026 (UTC), the CI run on 27 October, and
+the public AWS demo on 28 October. Everything is indexed in
 [`docs/EVIDENCE.md`](https://github.com/EbukaEdeh/devops-capstone/blob/main/docs/EVIDENCE.md).
+
+The Capstone 1 Voting App is also running publicly on one EC2 instance in
+`eu-north-1`, so the app can be viewed without a laptop or local Docker:
+
+- Vote: <http://13.62.69.172:8080/>
+- Result: <http://13.62.69.172:8081/>
+
+That EC2 host is a demo convenience; the EKS Terraform remains the capstone
+infrastructure path and is still not applied. Capstone 2 remains on the local
+kind cluster.
 
 ## 2. Repository map
 
@@ -73,6 +85,7 @@ delivered more than once is still counted once.
 | Requirement | Status | Evidence |
 | --- | --- | --- |
 | Clone the Voting App and run it locally | Done | Vote and result screenshots: `docs/evidence/screenshots/vote-page.png`, `docs/evidence/screenshots/result-page.png`; 283 ballots captured |
+| Public demo on AWS | Done | EC2 `eu-north-1`: <http://13.62.69.172:8080/> and <http://13.62.69.172:8081/>; `docs/evidence/aws-live-demo.txt` |
 | Containerize the application | Done | `services/vote/Dockerfile`, `services/result/Dockerfile`, `services/worker/Dockerfile`, `compose.yaml` |
 | Run containers safely | Done | Non-root users, pinned base images, read-only containers, health checks, `.dockerignore` |
 | Terraform an EKS cluster in the default VPC | Code complete and validated; apply not run | `infra/terraform/`; `terraform fmt -check` and `terraform validate` pass |
@@ -138,8 +151,11 @@ The Prometheus rules are:
 - `RobotShopPodRestarting` - repeated restarts, warning.
 
 The SLO is 99.5% availability over 30 days, which is 216 minutes of error
-budget. The 5% fast-burn alert is deliberately tighter than the 0.5% SLO
-threshold so the team is warned before the monthly budget is exhausted.
+budget. The 5% error-ratio rule is a coarse guard, not a burn-rate alert: it
+fires only at ten times the 0.5% error the SLO tolerates, so it catches a badly
+broken service rather than slow budget burn. A multi-window burn-rate rule (for
+example 2% of the monthly budget consumed in one hour) is the honest next step
+and is listed in section 10.
 
 ### Incident drill result
 
@@ -167,9 +183,10 @@ browser -> result (Flask) -> PostgreSQL aggregates
 
 All three services expose `/metrics`. The Compose observability profile adds
 Prometheus, Grafana, Jaeger, Loki and Promtail. In Kubernetes, the chart adds
-readiness and liveness probes, resource requests and limits, a HorizontalPodAutoscaler,
-a ServiceMonitor and a PrometheusRule. The worker handles SIGTERM gracefully and
-keeps Redis as the buffer if PostgreSQL is temporarily unavailable.
+readiness and liveness probes and resource requests and limits; `values-prod.yaml`
+adds a HorizontalPodAutoscaler, a ServiceMonitor, a PrometheusRule and network
+policies. The worker handles SIGTERM gracefully and keeps Redis as the buffer if
+PostgreSQL is temporarily unavailable.
 
 ### Robot Shop
 
@@ -251,6 +268,10 @@ Access:
 | `http://localhost:9090` | Prometheus, `/alerts` |
 | `http://localhost:16686` | Jaeger |
 
+Grafana, Prometheus and Jaeger are ClusterIP services in the kind demo, so they
+are reached through `kubectl port-forward`; `run-capstone2.ps1` prints the exact
+commands when it finishes. Robot Shop itself is on host port 8090.
+
 In the kind demo the Grafana login is `admin` / `admin`. Stop the cluster with
 `kind delete cluster --name voting-capstone`.
 
@@ -281,7 +302,7 @@ The commands below were run locally and recorded in
 | `helm template` for both charts | Rendered successfully |
 | `terraform fmt -check` and `terraform validate` | Clean and valid |
 | `docker compose config --quiet` | Exit 0 |
-| `actionlint` on `.github/workflows/ci-cd.yml` | No issues (actionlint 1.7.12) |
+| `actionlint` on `.github/workflows/ci-cd.yml` | No issues (actionlint 1.7.12, recorded in `docs/evidence/local-ci-checks.txt`) |
 | GitHub Actions run `40499887317` | Success: tests, lint, secret scan and vote/result/worker builds/scans; images pushed to GHCR; EKS deploy skipped |
 | Markdown relative-link check | 9 files checked, 0 broken |
 | Capstone 2 bring-up with `-SkipKindCreate` | All Helm releases upgraded; 13 Robot Shop pods and observability pods Ready |
@@ -294,9 +315,10 @@ These items are **not** claimed as complete:
 
 1. **EKS apply and destroy were not run.** The Terraform code is complete and
    validates, but applying it needs AWS credentials and a budget. Robot Shop and
-   the Voting App were deployed and exercised on kind instead. The chart and
-   values are portable to EKS; the cluster-specific values are in
-   `deploy/helm/voting-app/values-prod.yaml`.
+   the Voting App were deployed and exercised on kind instead. The public demo
+   runs the Voting App on one EC2 instance in `eu-north-1`; that host is not an
+   EKS cluster. The chart and values are portable to EKS; the cluster-specific
+   values are in `deploy/helm/voting-app/values-prod.yaml`.
 2. **The GitHub Actions workflow runs, but the EKS deploy job is skipped.** Run
    `40499887317` passed tests, lint, secret scan, all three image scans and the
    GHCR push. The deploy job requires `AWS_ROLE_ARN`, AWS OIDC,
@@ -328,6 +350,8 @@ completed requirement are all in the repository.
 - Apply and destroy the Terraform stack in a budgeted AWS account, then repeat
   the same Helm deployment on EKS.
 - Add a real Slack webhook and capture the delivered alert.
+- Replace the coarse 5% error-ratio rule with a multi-window burn-rate alert so
+  the SLO budget, not a fixed threshold, drives paging.
 - Run `payment` with two replicas and a PodDisruptionBudget, and reduce the
   `RobotShopServiceDown` `for` window to one minute.
 - Investigate the payment/RabbitMQ `StreamLostError` and remove the load
@@ -342,6 +366,7 @@ completed requirement are all in the repository.
 - [x] Capstone 1 app, Dockerfiles, Compose stack, Helm chart and rollback proof
 - [x] Capstone 1 Terraform for EKS and ECR (validated)
 - [x] Capstone 1 GitHub Actions run (tests, lint, secret scan, builds and GHCR push; EKS deploy skipped)
+- [x] Capstone 1 public AWS demo on EC2 with Elastic IP (not EKS)
 - [x] Capstone 2 Robot Shop deployment on kind
 - [x] Capstone 2 metrics, dashboard, logs, traces, SLO, alerts, runbook and postmortem
 - [x] Local verification results recorded

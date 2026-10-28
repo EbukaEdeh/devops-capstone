@@ -27,9 +27,24 @@ Status at hand-in: both capstones build and run on kind; 19 tests pass; Helm
 deploy and rollback are demonstrated; Terraform validates; the GitHub Actions
 pipeline ran successfully on `main` and pushed SHA-tagged images to GHCR; Robot
 Shop has a working dashboard, Loki logs, a Jaeger trace, a firing alert and a
-blameless postmortem. EKS apply and Slack delivery are **not** claimed - they
-need AWS/Slack credentials and are listed in [External gaps](#external-gaps).
-The CI deploy job is present but skips until AWS OIDC is configured.
+blameless postmortem. A public EC2 demo of Capstone 1 is live at the URLs below.
+EKS apply and Slack delivery are **not** claimed - they need AWS/Slack
+credentials and are listed in [External gaps](#external-gaps). The CI deploy job
+is present but skips until AWS OIDC is configured.
+
+## Live public demo
+
+The Capstone 1 Voting App is running on one EC2 instance in `eu-north-1`, using
+Docker Compose and the SHA-tagged images from GHCR:
+
+- Vote: **http://13.62.69.172:8080/**
+- Result: **http://13.62.69.172:8081/**
+
+The instance has an Elastic IP and `restart: unless-stopped` containers, so the
+URLs survive a reboot and do not depend on a laptop running Docker. The AWS
+override is [`compose.aws.yaml`](compose.aws.yaml). This is a public demo of
+Capstone 1; the EKS Terraform remains the capstone path, and Capstone 2 (Robot
+Shop) is documented from the local kind cluster rather than deployed on AWS.
 
 ## What is in the box
 
@@ -225,6 +240,7 @@ capstone2/docs/           Robot Shop SLO, error budget, runbook, drill, postmort
 docs/evidence/capstone2/  Robot Shop screenshots, alert JSON, logs and traces
 .github/workflows/        CI/CD pipeline
 compose.yaml              local Voting App stack
+compose.aws.yaml          AWS demo override: GHCR images, public ports
 compose.observability.yaml
 ```
 

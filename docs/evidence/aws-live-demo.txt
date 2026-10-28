@@ -1,0 +1,43 @@
+AWS public demo evidence
+========================
+
+Captured: 2026-10-28 (UTC)
+Region: eu-north-1
+Instance: i-001a1f457236e5ce9 (t3.small, Amazon Linux 2023)
+Elastic IP: 13.62.69.172
+Security group: sg-0bec300f922fe3d23
+Compose files: compose.yaml + compose.aws.yaml
+Image tag: bf7362c17e2ae84e75a2e6e5a39920cdda98bde5
+
+Public URLs
+-----------
+Vote:   http://13.62.69.172:8080/
+Result: http://13.62.69.172:8081/
+
+Public HTTP checks (from the workstation)
+-----------------------------------------
+GET  http://13.62.69.172:8080/             -> 200
+GET  http://13.62.69.172:8081/             -> 200
+POST http://13.62.69.172:8080/vote
+     form: choice=cats                      -> 303, redirect to /?voted=cats
+GET  http://13.62.69.172:8081/api/results  -> 200
+     total=2, cats=1, dogs=1
+
+On-instance compose status
+--------------------------
+NAME                  IMAGE                                                                               STATUS
+voting-app-db-1       postgres:16.10-alpine                                                               Up (healthy)
+voting-app-redis-1    redis:7.4.2-alpine                                                                  Up (healthy)
+voting-app-result-1   ghcr.io/ebukaedeh/devops-capstone/result:bf7362c17e2ae84e75a2e6e5a39920cdda98bde5   Up (healthy)
+voting-app-vote-1     ghcr.io/ebukaedeh/devops-capstone/vote:bf7362c17e2ae84e75a2e6e5a39920cdda98bde5     Up (healthy)
+voting-app-worker-1   ghcr.io/ebukaedeh/devops-capstone/worker:bf7362c17e2ae84e75a2e6e5a39920cdda98bde5   Up (healthy)
+
+Notes
+-----
+- The Elastic IP keeps the URLs stable across instance stop/start.
+- Containers use `restart: unless-stopped`; Docker is enabled at boot.
+- This is a public demo of Capstone 1. EKS apply is still not claimed; the
+  Terraform remains the capstone infrastructure path.
+- Capstone 2 (Robot Shop) evidence comes from the local kind cluster, not AWS.
+- The demo is intended to stay up for one month, then be destroyed. A $25
+  monthly AWS Budget alert is configured.
